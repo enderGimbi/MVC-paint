@@ -1,8 +1,9 @@
 package org.example.model;
 
+import org.example.view.Observable;
+
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.util.Observable;
 
 public class Model extends Observable {
     private MyShape currentShape;

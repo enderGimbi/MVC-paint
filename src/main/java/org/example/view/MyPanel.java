@@ -2,14 +2,11 @@ package org.example.view;
 
 import org.example.controller.Controller;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.Observable;
-import java.util.Observer;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public class MyPanel extends JPanel implements Observer {
@@ -29,6 +26,7 @@ public class MyPanel extends JPanel implements Observer {
                 controller.getPointTwo(arg0.getPoint());
             }
         });
+        add(new JComboBox<>(new String[]{"123"}));
     }
 
     @Override
@@ -39,8 +37,7 @@ public class MyPanel extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable observable, Object o) {
         repaint();
     }
-
 }
