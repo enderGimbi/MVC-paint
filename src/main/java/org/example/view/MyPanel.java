@@ -11,6 +11,7 @@ import javax.swing.*;
 
 public class MyPanel extends JPanel implements Observer {
     private final Controller controller;
+    private JMenuBar menuBar;
 
     public MyPanel(Controller controller) {
         this.controller = controller;
@@ -26,7 +27,16 @@ public class MyPanel extends JPanel implements Observer {
                 controller.getPointTwo(arg0.getPoint());
             }
         });
-        add(new JComboBox<>(new String[]{"123"}));
+        menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Test");
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem("123");
+        menu.add(item);
+        menuBar.add(menu);
+        add(menuBar);
+    }
+
+    public JMenuBar getMenuBar() {
+        return menuBar;
     }
 
     @Override

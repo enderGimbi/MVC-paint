@@ -5,20 +5,24 @@
  */
 package org.example.view;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 
 public class MyFrame extends JFrame {
     private MyPanel panel;
 
     public MyFrame() {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("pain");
         setSize(1920, 1080);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
+
     }
 
     public void setPanel(MyPanel panel) {
         this.panel = panel;
+        setJMenuBar(panel.getMenuBar());
         add(panel);
     }
 

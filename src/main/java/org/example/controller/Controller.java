@@ -6,6 +6,7 @@ import org.example.model.fill.NoFill;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -24,6 +25,7 @@ public class Controller {
         model.setMyShape(shape);
 
         panel = new MyPanel(this);
+
         model.subscribe(panel);
 
         frame = new MyFrame();
