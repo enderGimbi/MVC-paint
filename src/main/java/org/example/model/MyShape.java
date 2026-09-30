@@ -4,24 +4,16 @@ import org.example.model.fill.Fill;
 import org.example.model.fill.FillBehavior;
 import org.example.model.fill.NoFill;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 public class MyShape {
-    private final Color color;
+    private Color color;
     private RectangularShape shape;
     private FillBehavior fb;
-
-    public MyShape(RectangularShape shape) {
-        this.shape = shape;
-        color = Color.GREEN;
-        fb = new Fill();
-        fb.setColor(color);
-        fb.setShape(shape);
-    }
 
     // TODO: Попробовать вызовы через разные конструкторы, затем переделать создание через фабрику
     public MyShape() {
@@ -41,6 +33,14 @@ public class MyShape {
         this.fb.setColor(color);
     }
 
+    public MyShape(Shape shape) {
+        this.shape = (RectangularShape) shape;
+        color = Color.GREEN;
+        fb = new Fill();
+        fb.setColor(color);
+        fb.setShape((RectangularShape) shape);
+    }
+
     public void setFb(FillBehavior fb) {
         this.fb = fb;
         fb.setShape(shape);
@@ -57,6 +57,9 @@ public class MyShape {
 
     void draw(Graphics2D g) {
         fb.draw(g);
+    }
 
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

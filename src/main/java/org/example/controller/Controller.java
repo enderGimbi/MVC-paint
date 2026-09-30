@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.model.Model;
 import org.example.model.MyShape;
+import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
@@ -21,7 +22,7 @@ public class Controller {
     private Controller() {
         model = new Model();
         MyShape shape = new MyShape(new Rectangle2D.Double());
-        shape.setFb(new NoFill());
+        shape.setFb(new Fill());
         model.setMyShape(shape);
 
         panel = new MyPanel(this);
