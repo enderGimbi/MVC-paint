@@ -1,17 +1,16 @@
 package org.example.view;
 
 import org.example.controller.Controller;
+import org.example.model.shape.factory.ShapeType;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import javax.swing.*;
 
 
 public class MyPanel extends JPanel implements Observer {
     private final Controller controller;
-    private JMenuBar menuBar;
+    private final JMenuBar menuBar;
 
     public MyPanel(Controller controller) {
         this.controller = controller;
@@ -28,10 +27,17 @@ public class MyPanel extends JPanel implements Observer {
             }
         });
         menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Test");
-        JRadioButtonMenuItem item = new JRadioButtonMenuItem("123");
-        menu.add(item);
-        menuBar.add(menu);
+        JMenu shapes = new JMenu("Фигуры");
+
+        JRadioButtonMenuItem ellipse = new JRadioButtonMenuItem("Эллипс");
+        ellipse.addActionListener((ActionEvent e)->{controller.setShape(ShapeType.Ellipse);});
+        JRadioButtonMenuItem rectangle = new JRadioButtonMenuItem("Прямоугольник");
+        rectangle.addActionListener((ActionListener) ->{controller.setShape(ShapeType.Rectangle);});
+
+        shapes.add(ellipse);
+        shapes.add(rectangle);
+
+        menuBar.add(shapes);
         add(menuBar);
     }
 

@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 public class MyShapeFactory {
-    public MyShape createShape(ShapeType type){
+    public static MyShape createShape(ShapeType type){
         switch (type){
             case Ellipse -> {
                 Shape shape = new Ellipse2D.Double();

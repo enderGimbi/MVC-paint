@@ -4,6 +4,8 @@ import org.example.model.Model;
 import org.example.model.MyShape;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
+import org.example.model.shape.factory.MyShapeFactory;
+import org.example.model.shape.factory.ShapeType;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
@@ -49,4 +51,10 @@ public class Controller {
             instance = new Controller();
         }
     }
+
+    public void setShape(ShapeType shape){
+        model.setMyShape(MyShapeFactory.createShape(shape));
+    }
+
+
 }
