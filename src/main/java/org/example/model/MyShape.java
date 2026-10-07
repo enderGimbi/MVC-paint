@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 public class MyShape {
-    private Color color;
+    private final Color color;
     private RectangularShape shape;
     private FillBehavior fb;
 
@@ -41,14 +41,18 @@ public class MyShape {
         fb.setShape((RectangularShape) shape);
     }
 
+    public MyShape(Shape shape, Color color, FillBehavior fill) {
+        this.shape = (RectangularShape) shape;
+        this.color = color;
+        fb = fill;
+        fb.setColor(color);
+        fb.setShape((RectangularShape) shape);
+    }
+
     public void setFb(FillBehavior fb) {
         this.fb = fb;
         fb.setShape(shape);
         fb.setColor(color);
-    }
-
-    public void setShape(RectangularShape shape) {
-        this.shape = shape;
     }
 
     public void setFrame(Point2D x, Point2D y) {
@@ -59,7 +63,4 @@ public class MyShape {
         fb.draw(g);
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
 }

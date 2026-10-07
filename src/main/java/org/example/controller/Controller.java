@@ -23,6 +23,8 @@ public class Controller {
     private Point2D secondPoint;
     private Controller() {
         model = new Model();
+        model.setFb(new Fill());
+        model.setColor(Color.BLACK);
         MyShape shape = new MyShape(new Rectangle2D.Double());
         shape.setFb(new Fill());
         model.setMyShape(shape);
@@ -52,9 +54,7 @@ public class Controller {
         }
     }
 
-    public void setShape(ShapeType shape){
-        model.setMyShape(MyShapeFactory.createShape(shape));
+    public Model getModel() {
+        return model;
     }
-
-
 }

@@ -5,6 +5,9 @@ import org.example.model.shape.factory.ShapeType;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 import javax.swing.*;
 
 
@@ -30,9 +33,15 @@ public class MyPanel extends JPanel implements Observer {
         JMenu shapes = new JMenu("Фигуры");
 
         JRadioButtonMenuItem ellipse = new JRadioButtonMenuItem("Эллипс");
-        ellipse.addActionListener((ActionEvent e)->{controller.setShape(ShapeType.Ellipse);});
+        ellipse.addActionListener((ActionEvent e)->{
+            controller.getModel().setShape(ShapeType.Ellipse);
+            controller.getModel().setMyShape();
+        });
         JRadioButtonMenuItem rectangle = new JRadioButtonMenuItem("Прямоугольник");
-        rectangle.addActionListener((ActionListener) ->{controller.setShape(ShapeType.Rectangle);});
+        rectangle.addActionListener((ActionListener) ->{
+            controller.getModel().setShape(ShapeType.Rectangle);
+            controller.getModel().setMyShape();
+        });
 
         shapes.add(ellipse);
         shapes.add(rectangle);
