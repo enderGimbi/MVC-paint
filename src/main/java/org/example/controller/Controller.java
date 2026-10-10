@@ -1,18 +1,13 @@
 package org.example.controller;
 
 import org.example.model.Model;
-import org.example.model.MyShape;
 import org.example.model.fill.Fill;
-import org.example.model.fill.NoFill;
-import org.example.model.shape.factory.MyShapeFactory;
-import org.example.model.shape.factory.ShapeType;
+import org.example.model.factory.ShapeType;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 public class Controller {
     private static Controller instance;
@@ -23,11 +18,10 @@ public class Controller {
     private Point2D secondPoint;
     private Controller() {
         model = new Model();
+        model.setShape(ShapeType.Rectangle);
         model.setFb(new Fill());
         model.setColor(Color.BLACK);
-        MyShape shape = new MyShape(new Rectangle2D.Double());
-        shape.setFb(new Fill());
-        model.setMyShape(shape);
+        model.setMyShape();
 
         panel = new MyPanel(this);
 

@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.utils;
 
 import java.util.Vector;
 

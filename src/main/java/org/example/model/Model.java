@@ -1,9 +1,9 @@
 package org.example.model;
 
 import org.example.model.fill.FillBehavior;
-import org.example.model.shape.factory.MyShapeFactory;
-import org.example.model.shape.factory.ShapeType;
-import org.example.view.Observable;
+import org.example.model.factory.MyShapeFactory;
+import org.example.model.factory.ShapeType;
+import org.example.utils.Observable;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

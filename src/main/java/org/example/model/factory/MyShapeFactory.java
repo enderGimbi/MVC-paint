@@ -1,7 +1,7 @@
-package org.example.model.shape.factory;
+package org.example.model.factory;
 
-import org.example.model.MyShape;
 import org.example.model.fill.FillBehavior;
+import org.example.model.MyShape;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -9,17 +9,18 @@ import java.awt.geom.Rectangle2D;
 
 public class MyShapeFactory {
     public static MyShape createShape(ShapeType type, Color color, FillBehavior fillBehavior){
+        Shape shape;
         switch (type){
             case Ellipse -> {
-                return new MyShape(new Ellipse2D.Double(),color,fillBehavior);
+                shape=new Ellipse2D.Double();
             }
             case Rectangle -> {
-                Shape shape = new Rectangle2D.Double();
-                return new MyShape(shape);
+                shape=new Rectangle2D.Double();
             }
             default -> {
                 return new MyShape();
             }
         }
+        return new MyShape(shape,color,fillBehavior);
     }
 }

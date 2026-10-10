@@ -2,43 +2,23 @@ package org.example.model;
 
 import org.example.model.fill.Fill;
 import org.example.model.fill.FillBehavior;
-import org.example.model.fill.NoFill;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-public class MyShape {
+public class MyShape implements Cloneable {
     private final Color color;
-    private RectangularShape shape;
-    private FillBehavior fb;
+    private final RectangularShape shape;
+    private final FillBehavior fb;
 
-    // TODO: Попробовать вызовы через разные конструкторы, затем переделать создание через фабрику
     public MyShape() {
         color = Color.BLUE;
         shape = new Rectangle2D.Double();
         fb = new Fill();
         fb.setColor(color);
         fb.setShape(shape);
-    }
-
-    // TODO: Попробовать вызовы через разные конструкторы, затем переделать создание через фабрику
-    public MyShape(Color color, RectangularShape shape, FillBehavior fb) {
-        this.color = color;
-        this.shape = shape;
-        this.fb = fb;
-        this.fb.setShape(shape);
-        this.fb.setColor(color);
-    }
-
-    public MyShape(Shape shape) {
-        this.shape = (RectangularShape) shape;
-        color = Color.GREEN;
-        fb = new Fill();
-        fb.setColor(color);
-        fb.setShape((RectangularShape) shape);
     }
 
     public MyShape(Shape shape, Color color, FillBehavior fill) {
@@ -49,12 +29,6 @@ public class MyShape {
         fb.setShape((RectangularShape) shape);
     }
 
-    public void setFb(FillBehavior fb) {
-        this.fb = fb;
-        fb.setShape(shape);
-        fb.setColor(color);
-    }
-
     public void setFrame(Point2D x, Point2D y) {
         shape.setFrameFromDiagonal(x, y);
     }
@@ -63,4 +37,12 @@ public class MyShape {
         fb.draw(g);
     }
 
+    @Override
+    public MyShape clone() {
+        try {
+            return (MyShape) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
