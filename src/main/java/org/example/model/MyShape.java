@@ -4,6 +4,7 @@ import org.example.model.fill.Fill;
 import org.example.model.fill.FillBehavior;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
@@ -39,10 +40,20 @@ public class MyShape implements Cloneable {
 
     @Override
     public MyShape clone() {
-        try {
-            return (MyShape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
+        FillBehavior newFb;
+        if (this.fb instanceof org.example.model.fill.NoFill) {
+            newFb = new org.example.model.fill.NoFill();
+        } else {
+            newFb = new org.example.model.fill.Fill();
         }
+        newFb.setColor(this.color);
+
+        Shape newGeom = (this.shape instanceof Ellipse2D) ? new Ellipse2D.Double() : new Rectangle2D.Double();
+        MyShape cloned = new MyShape(newGeom, this.color, newFb);
+        if (this.shape != null) {
+            cloned.shape.setFrame(this.shape.getBounds2D());
+            newFb.setShape(cloned.shape);
+        }
+        return cloned;
     }
 }
