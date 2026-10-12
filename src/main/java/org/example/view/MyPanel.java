@@ -35,10 +35,17 @@ public class MyPanel extends JPanel implements Observer {
         var shapes = getShapes(controller);
         var colors = getColors(controller);
         var fill = getFill(controller);
+        var tools = new JMenu("Инструменты");
+        var clear =new JMenuItem("Очистка");
+        clear.addActionListener((actionEvent)->{
+            controller.getModel().clearBoard();
+        });
+        tools.add(clear);
 
         menuBar.add(shapes);
         menuBar.add(colors);
         menuBar.add(fill);
+        menuBar.add(tools);
         add(menuBar);
     }
 

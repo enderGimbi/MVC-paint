@@ -65,4 +65,10 @@ public class Model extends Observable {
     public MyShape getCurrentShape() {
         return currentShape;
     }
+
+    public void clearBoard(){
+        shapesList.clear();
+        this.setChanged();
+        this.notifyObservers();
+    }
 }
