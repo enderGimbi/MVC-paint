@@ -10,7 +10,6 @@ public class ActionDraw {
     private MyShape sampleShape;
     private MyShape shape;
     private Point2D firstPoint;
-    private Point2D secondPoint;
     private final Model model;
 
     public ActionDraw(Model model) {
@@ -31,9 +30,8 @@ public class ActionDraw {
     }
 
     public void stretchShape(Point point) {
-        this.secondPoint = point;
         if (shape != null && firstPoint != null) {
-            shape.setFrame(firstPoint, secondPoint);
+            shape.setFrame(firstPoint, point);
         }
     }
 }

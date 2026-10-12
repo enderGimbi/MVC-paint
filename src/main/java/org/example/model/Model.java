@@ -71,4 +71,8 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers();
     }
+
+    public List<MyShape> getShapesList() {
+        return shapesList;
+    }
 }

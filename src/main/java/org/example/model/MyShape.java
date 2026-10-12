@@ -13,6 +13,8 @@ public class MyShape implements Cloneable {
     private final Color color;
     private final RectangularShape shape;
     private final FillBehavior fb;
+    private Point2D firstPoint;
+    private Point2D secondPoint;
 
     public MyShape() {
         color = Color.BLUE;
@@ -31,6 +33,8 @@ public class MyShape implements Cloneable {
     }
 
     public void setFrame(Point2D x, Point2D y) {
+        this.firstPoint = x;
+        this.secondPoint = y;
         shape.setFrameFromDiagonal(x, y);
     }
 
@@ -55,5 +59,21 @@ public class MyShape implements Cloneable {
             newFb.setShape(cloned.shape);
         }
         return cloned;
+    }
+
+    public Point2D getFirstPoint() {
+        return firstPoint;
+    }
+
+    public void setFirstPoint(Point2D firstPoint) {
+        this.firstPoint = firstPoint;
+    }
+
+    public Point2D getSecondPoint() {
+        return secondPoint;
+    }
+
+    public void setSecondPoint(Point2D secondPoint) {
+        this.secondPoint = secondPoint;
     }
 }

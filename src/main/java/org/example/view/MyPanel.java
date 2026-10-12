@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.controller.Controller;
+import org.example.controller.action.Actions;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.model.factory.ShapeType;
@@ -35,12 +36,8 @@ public class MyPanel extends JPanel implements Observer {
         var shapes = getShapes(controller);
         var colors = getColors(controller);
         var fill = getFill(controller);
-        var tools = new JMenu("Инструменты");
-        var clear =new JMenuItem("Очистка");
-        clear.addActionListener((actionEvent)->{
-            controller.getModel().clearBoard();
-        });
-        tools.add(clear);
+        var tools = getTools(controller);
+
 
         menuBar.add(shapes);
         menuBar.add(colors);
@@ -109,6 +106,29 @@ public class MyPanel extends JPanel implements Observer {
         fill.add(withoutFill);
 
         return fill;
+    }
+
+    private  JMenu getTools(Controller controller){
+        var tools = new JMenu("Инструменты");
+
+        var clear =new JMenuItem("Очистка");
+        clear.addActionListener((actionEvent)->{
+            controller.getModel().clearBoard();
+        });
+        var draw = new JMenuItem("Рисовать");
+        draw.addActionListener((actionEvent)->{
+            controller.setCurrentAction(Actions.DRAW);
+        });
+        var move = new JMenuItem("Двигать");
+        move.addActionListener((actionEvent)->{
+            controller.setCurrentAction(Actions.MOVE);
+        });
+
+        tools.add(clear);
+        tools.add(draw);
+        tools.add(move);
+
+        return tools;
     }
 
     public JMenuBar getMenuBar() {
