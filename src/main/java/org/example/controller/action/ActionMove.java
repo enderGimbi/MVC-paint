@@ -4,7 +4,6 @@ import org.example.model.Model;
 import org.example.model.MyShape;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 public class ActionMove {
     private final Model model;
@@ -49,8 +48,10 @@ public class ActionMove {
     private boolean isCursorOnShape(MyShape shape,Point point){
         if(shape==null||point==null)
             return false;
-        boolean checkX = shape.getFirstPoint().getX()<point.x&&shape.getSecondPoint().getX()>point.x;
-        boolean checkY = shape.getFirstPoint().getY()<point.y&&shape.getSecondPoint().getY()>point.y;
+        boolean checkX = shape.getFirstPoint().getX()<point.x
+                &&shape.getSecondPoint().getX()>point.x;
+        boolean checkY = shape.getFirstPoint().getY()<point.y
+                &&shape.getSecondPoint().getY()>point.y;
         return checkY && checkX;
     }
 }

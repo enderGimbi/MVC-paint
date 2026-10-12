@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
 import org.example.controller.action.Actions;
+import org.example.controller.action.ActionsHistory;
 import org.example.model.Model;
 import org.example.model.fill.Fill;
 import org.example.model.factory.ShapeType;
@@ -19,6 +20,7 @@ public class Controller {
     private final ActionDraw actionDraw;
     private final ActionMove actionMove;
     private Actions currentAction;
+    private ActionsHistory history;
 
     private Controller() {
         model = new Model();
@@ -31,6 +33,8 @@ public class Controller {
         actionDraw = new ActionDraw(model);
         actionDraw.setSampleShape(model.getCurrentShape());
         actionMove = new ActionMove(model);
+
+        history = new ActionsHistory();
 
         panel = new MyPanel(this);
 
@@ -70,6 +74,10 @@ public class Controller {
         model.notifyObservers();
     }
 
+    public void mouseReleased(){
+        history.saveState(model.getShapesList());
+    }
+
     public void draw(Graphics2D g2) {
         model.draw(g2);
     }
@@ -86,5 +94,9 @@ public class Controller {
 
     public void setCurrentAction(Actions currentAction) {
         this.currentAction = currentAction;
+    }
+
+    public ActionsHistory getHistory() {
+        return history;
     }
 }

@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.controller.Controller;
 import org.example.controller.action.Actions;
+import org.example.controller.action.ActionsHistory;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.model.factory.ShapeType;
@@ -23,6 +24,11 @@ public class MyPanel extends JPanel implements Observer {
             @Override
             public void mousePressed(MouseEvent arg0) {
                 controller.mousePressed(arg0.getPoint());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                controller.mouseReleased();
             }
         });
         addMouseMotionListener(new MouseMotionAdapter() {
@@ -111,6 +117,18 @@ public class MyPanel extends JPanel implements Observer {
     private  JMenu getTools(Controller controller){
         var tools = new JMenu("Инструменты");
 
+        var undo = new JMenuItem("Назад");
+        undo.addActionListener((actionEvent)->{
+            controller.getModel().setShapesList(controller.getHistory().undo());
+            controller.getModel().setChanged();
+            controller.getModel().notifyObservers();
+        });
+        var redo = new JMenuItem("Вперед");
+        redo.addActionListener((actionEvent)->{
+            controller.getModel().setShapesList(controller.getHistory().redo());
+            controller.getModel().setChanged();
+            controller.getModel().notifyObservers();
+        });
         var clear =new JMenuItem("Очистка");
         clear.addActionListener((actionEvent)->{
             controller.getModel().clearBoard();
@@ -124,6 +142,8 @@ public class MyPanel extends JPanel implements Observer {
             controller.setCurrentAction(Actions.MOVE);
         });
 
+        tools.add(undo);
+        tools.add(redo);
         tools.add(clear);
         tools.add(draw);
         tools.add(move);

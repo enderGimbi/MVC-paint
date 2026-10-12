@@ -16,7 +16,7 @@ public class Model extends Observable {
     private ShapeType shape;
     private FillBehavior fb;
 
-    private final List<MyShape> shapesList = new ArrayList<>();
+    private List<MyShape> shapesList = new ArrayList<>();
 
     public void setMyShape() {
         this.currentShape = MyShapeFactory.createShape(shape,color,fb);
@@ -74,5 +74,9 @@ public class Model extends Observable {
 
     public List<MyShape> getShapesList() {
         return shapesList;
+    }
+
+    public void setShapesList(List<MyShape> shapesList) {
+        this.shapesList = (shapesList!=null)?shapesList:this.shapesList;
     }
 }

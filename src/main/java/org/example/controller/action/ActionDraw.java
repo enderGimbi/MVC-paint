@@ -7,10 +7,10 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 
 public class ActionDraw {
+    private final Model model;
     private MyShape sampleShape;
     private MyShape shape;
     private Point2D firstPoint;
-    private final Model model;
 
     public ActionDraw(Model model) {
         this.model = model;
