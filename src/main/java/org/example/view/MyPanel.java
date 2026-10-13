@@ -3,8 +3,6 @@ package org.example.view;
 import org.example.controller.Controller;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
-import org.example.controller.action.Actions;
-import org.example.controller.action.ActionsHistory;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.model.factory.ShapeType;
@@ -122,18 +120,17 @@ public class MyPanel extends JPanel implements Observer {
         var undo = new JMenuItem("Назад");
         undo.addActionListener((actionEvent)->{
             controller.getModel().setShapesList(controller.getHistory().undo());
-            controller.getModel().setChanged();
-            controller.getModel().notifyObservers();
         });
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,InputEvent.CTRL_DOWN_MASK));
         var redo = new JMenuItem("Вперед");
         redo.addActionListener((actionEvent)->{
             controller.getModel().setShapesList(controller.getHistory().redo());
-            controller.getModel().setChanged();
-            controller.getModel().notifyObservers();
         });
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,InputEvent.CTRL_DOWN_MASK));
         var clear =new JMenuItem("Очистка");
         clear.addActionListener((actionEvent)->{
             controller.getModel().clearBoard();
+            controller.mouseReleased();
         });
         var draw = new JMenuItem("Рисовать");
         draw.addActionListener((actionEvent)->{

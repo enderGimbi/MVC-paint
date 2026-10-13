@@ -38,18 +38,17 @@ public class ActionDraw implements Action {
     @Override
     public void mousePressed(Point point) {
         model.setMyShape();
-        this.update();
-        this.createShape(point);
+        update();
+        createShape(point);
     }
 
     @Override
     public void mouseDragged(Point point) {
-        this.stretchShape(point);
+        stretchShape(point);
     }
 
     @Override
     public void update() {
-
-        this.setSampleShape(model.getCurrentShape());
+        setSampleShape(model.getCurrentShape());
     }
 }

@@ -68,8 +68,8 @@ public class Model extends Observable {
 
     public void clearBoard(){
         shapesList.clear();
-        this.setChanged();
-        this.notifyObservers();
+        setChanged();
+        notifyObservers();
     }
 
     public List<MyShape> getShapesList() {
@@ -78,5 +78,7 @@ public class Model extends Observable {
 
     public void setShapesList(List<MyShape> shapesList) {
         this.shapesList = (shapesList!=null)?shapesList:this.shapesList;
+        setChanged();
+        notifyObservers();
     }
 }

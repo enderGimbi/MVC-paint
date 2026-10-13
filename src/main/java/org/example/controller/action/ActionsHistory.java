@@ -35,7 +35,7 @@ public class ActionsHistory {
             currentIndex--;
             return deepCopy(history.get(currentIndex));
         }
-        return null;
+        throw new NullPointerException("ЗА ПРЕДЕЛАМИ МАССИВА - ДО"+" "+currentIndex);
     }
 
     public List<MyShape> redo(){
@@ -43,7 +43,7 @@ public class ActionsHistory {
             currentIndex++;
             return deepCopy(history.get(currentIndex));
         }
-        return null;
+        throw new NullPointerException("ЗА ПРЕДЕЛАМИ МАССИВА - ПОСЛЕ"+" "+currentIndex);
     }
 
 

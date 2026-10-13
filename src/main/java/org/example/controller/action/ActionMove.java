@@ -32,7 +32,7 @@ public class ActionMove implements Action{
     public void chooseShape(Point point){
         currentShape=null;
         if(model.getShapesList().isEmpty()){
-            return;
+            throw new NullPointerException("Попытка использования пустого массива фигур");
         }
 
         for (int i = model.getShapesList().size()-1; i >-1; i--) {
@@ -45,15 +45,15 @@ public class ActionMove implements Action{
     }
 
     private boolean isCursorOnShape(MyShape shape,Point point){
-        try{
-            if (shape == null || point == null)
-                return false;
+        if (shape == null || point == null) {
+            return false;
         }
-        catch (NullPointerException e){
-            System.out.println("ХУЛИ НЕ РАБОТАЕМ");
-        }
+
         boolean checkX = shape.getFirstPoint().getX()<point.x
-                &&shape.getSecondPoint().getX()>point.x;
+                &&shape.getSecondPoint().getX()>point.x
+                ||
+                shape.getFirstPoint().getX()>point.x
+                &&shape.getSecondPoint().getX()<point.x;
         boolean checkY = shape.getFirstPoint().getY()<point.y
                 &&shape.getSecondPoint().getY()>point.y
                 ||

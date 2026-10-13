@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.controller.action.ActionDraw;
-import org.example.controller.action.ActionMove;
 import org.example.controller.action.Action;
 import org.example.controller.action.ActionsHistory;
 import org.example.model.Model;

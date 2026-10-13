@@ -58,6 +58,8 @@ public class MyShape implements Cloneable {
             cloned.shape.setFrame(this.shape.getBounds2D());
             newFb.setShape(cloned.shape);
         }
+        cloned.setFirstPoint(getFirstPoint());
+        cloned.setSecondPoint(getSecondPoint());
         return cloned;
     }
 
