@@ -6,7 +6,7 @@ import org.example.model.MyShape;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-public class ActionDraw {
+public class ActionDraw implements Action {
     private final Model model;
     private MyShape sampleShape;
     private MyShape shape;
@@ -33,5 +33,23 @@ public class ActionDraw {
         if (shape != null && firstPoint != null) {
             shape.setFrame(firstPoint, point);
         }
+    }
+
+    @Override
+    public void mousePressed(Point point) {
+        model.setMyShape();
+        this.update();
+        this.createShape(point);
+    }
+
+    @Override
+    public void mouseDragged(Point point) {
+        this.stretchShape(point);
+    }
+
+    @Override
+    public void update() {
+
+        this.setSampleShape(model.getCurrentShape());
     }
 }

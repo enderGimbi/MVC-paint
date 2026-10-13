@@ -1,6 +1,8 @@
 package org.example.view;
 
 import org.example.controller.Controller;
+import org.example.controller.action.ActionDraw;
+import org.example.controller.action.ActionMove;
 import org.example.controller.action.Actions;
 import org.example.controller.action.ActionsHistory;
 import org.example.model.fill.Fill;
@@ -135,11 +137,11 @@ public class MyPanel extends JPanel implements Observer {
         });
         var draw = new JMenuItem("Рисовать");
         draw.addActionListener((actionEvent)->{
-            controller.setCurrentAction(Actions.DRAW);
+            controller.setCurrentAction(new ActionDraw(controller.getModel()));
         });
         var move = new JMenuItem("Двигать");
         move.addActionListener((actionEvent)->{
-            controller.setCurrentAction(Actions.MOVE);
+            controller.setCurrentAction(new ActionMove(controller.getModel()));
         });
 
         tools.add(undo);

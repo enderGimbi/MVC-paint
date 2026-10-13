@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
-import org.example.controller.action.Actions;
+import org.example.controller.action.Action;
 import org.example.controller.action.ActionsHistory;
 import org.example.model.Model;
 import org.example.model.fill.Fill;
@@ -10,6 +10,7 @@ import org.example.model.factory.ShapeType;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Controller {
@@ -17,9 +18,7 @@ public class Controller {
     private final Model model;
     private final MyFrame frame;
     private final MyPanel panel;
-    private final ActionDraw actionDraw;
-    private final ActionMove actionMove;
-    private Actions currentAction;
+    private Action currentAction;
     private ActionsHistory history;
 
     private Controller() {
@@ -29,10 +28,8 @@ public class Controller {
         model.setFb(new Fill());
         model.setMyShape();
 
-        currentAction = Actions.DRAW;
-        actionDraw = new ActionDraw(model);
-        actionDraw.setSampleShape(model.getCurrentShape());
-        actionMove = new ActionMove(model);
+        currentAction = new ActionDraw(model);
+        currentAction.update();
 
         history = new ActionsHistory();
 
@@ -45,31 +42,11 @@ public class Controller {
     }
 
     public void mousePressed(Point p) {
-        switch (currentAction){
-            case DRAW -> {
-                model.setMyShape();
-                actionDraw.setSampleShape(model.getCurrentShape());
-                actionDraw.createShape(p);
-
-            }
-            case MOVE ->{
-                actionMove.chooseShape(p);
-
-            }
-        }
+        currentAction.mousePressed(p);
     }
 
     public void mouseDragged(Point p) {
-        switch (currentAction){
-            case DRAW -> {
-                actionDraw.stretchShape(p);
-
-            }
-            case MOVE -> {
-                actionMove.moveShape(p);
-
-            }
-        }
+        currentAction.mouseDragged(p);
         model.setChanged();
         model.notifyObservers();
     }
@@ -92,7 +69,7 @@ public class Controller {
         return model;
     }
 
-    public void setCurrentAction(Actions currentAction) {
+    public void setCurrentAction(Action currentAction) {
         this.currentAction = currentAction;
     }
 

@@ -5,7 +5,7 @@ import org.example.model.MyShape;
 
 import java.awt.*;
 
-public class ActionMove {
+public class ActionMove implements Action{
     private final Model model;
     private MyShape currentShape;
     private Point pressedPoint;
@@ -34,10 +34,9 @@ public class ActionMove {
         if(model.getShapesList().isEmpty()){
             return;
         }
-        MyShape shape;
 
         for (int i = model.getShapesList().size()-1; i >-1; i--) {
-            shape = model.getShapesList().get(i);
+            MyShape shape = model.getShapesList().get(i);
             if(isCursorOnShape(shape,point)){
                 currentShape = shape;
                 pressedPoint = point;
@@ -46,12 +45,35 @@ public class ActionMove {
     }
 
     private boolean isCursorOnShape(MyShape shape,Point point){
-        if(shape==null||point==null)
-            return false;
+        try{
+            if (shape == null || point == null)
+                return false;
+        }
+        catch (NullPointerException e){
+            System.out.println("ХУЛИ НЕ РАБОТАЕМ");
+        }
         boolean checkX = shape.getFirstPoint().getX()<point.x
                 &&shape.getSecondPoint().getX()>point.x;
         boolean checkY = shape.getFirstPoint().getY()<point.y
-                &&shape.getSecondPoint().getY()>point.y;
+                &&shape.getSecondPoint().getY()>point.y
+                ||
+                shape.getFirstPoint().getY()>point.y
+                &&shape.getSecondPoint().getY()<point.y;
         return checkY && checkX;
+    }
+
+    @Override
+    public void mousePressed(Point point) {
+        this.chooseShape(point);
+    }
+
+    @Override
+    public void mouseDragged(Point point) {
+        this.moveShape(point);
+    }
+
+    @Override
+    public void update() {
+
     }
 }
