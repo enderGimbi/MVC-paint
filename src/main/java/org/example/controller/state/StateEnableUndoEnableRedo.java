@@ -1,33 +1,42 @@
 package org.example.controller.state;
 
-import org.example.controller.actions.AppAction;
+import org.example.controller.action.Action;
 
 import java.util.LinkedList;
 
 public class StateEnableUndoEnableRedo extends UndoRedoState {
 
-    protected StateEnableUndoEnableRedo(LinkedList<AppAction> undoActivityList, LinkedList<AppAction> redoActivity) {
+    protected StateEnableUndoEnableRedo(LinkedList<Action> undoActivityList, LinkedList<Action> redoActivity) {
         super(undoActivityList, redoActivity);
     }
 
     @Override
     public UndoRedoState undo() {
-        //TODO: Определить
-        LinkedList<AppAction> undoActivityList = getUndoActivityList();
-        LinkedList<AppAction> redoActivityList = getRedoActivityList();
-        AppAction action = undoActivityList.pollLast();
+        LinkedList<Action> undoActivityList = getUndoActivityList();
+        LinkedList<Action> redoActivityList = getRedoActivityList();
+        Action action = undoActivityList.pollLast();
         if (action != null) {
             redoActivityList.add(action);
-            action.unexecute();
+//            action.unexecute();
         }
-        if (undoActivityList.size() == 0) {
+        if (undoActivityList.isEmpty()) {
             return new StateDisableUndoEnableRedo(getUndoActivityList(), getRedoActivityList());
         } else return this;
     }
 
     @Override
     public UndoRedoState redo() {
-        //TODO: Определить
-        return this;
+        LinkedList<Action> undoActivityList = getUndoActivityList();
+        LinkedList<Action> redoActivityList = getRedoActivityList();
+        Action action = redoActivityList.pollLast();
+        if (action != null) {
+            undoActivityList.add(action);
+            // action.execute(); // Вызов выполнения действия, если поддерживается
+        }
+        if (redoActivityList.isEmpty()) {
+            return new StateEnableUndoDisableRedo(undoActivityList, redoActivityList);
+        } else {
+            return this;
+        }
     }
 }

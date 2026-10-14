@@ -1,11 +1,11 @@
 package org.example.controller.state;
 
-import org.example.controller.actions.AppAction;
+import org.example.controller.action.Action;
 
 import java.util.LinkedList;
 
 public class StateDisableUndoDisableRedo extends UndoRedoState {
-    protected StateDisableUndoDisableRedo(LinkedList<AppAction> undoActivityList, LinkedList<AppAction> redoActivity) {
+    protected StateDisableUndoDisableRedo(LinkedList<Action> undoActivityList, LinkedList<Action> redoActivity) {
         super(undoActivityList, redoActivity);
     }
 
