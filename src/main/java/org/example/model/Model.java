@@ -22,10 +22,6 @@ public class Model extends Observable {
         this.currentShape = MyShapeFactory.createShape(shape,color,fb);
     }
 
-    public void setMyShape(MyShape shape) {
-        this.currentShape = shape;
-    }
-
     public void createCurrentShape(MyShape shape) {
         this.currentShape = shape;
         if (shape!=null && !shapesList.contains(shape)) {
@@ -79,6 +75,12 @@ public class Model extends Observable {
     public void setShapesList(List<MyShape> shapesList) {
         this.shapesList = (shapesList!=null)?shapesList:this.shapesList;
         setChanged();
+        notifyObservers();
+    }
+
+    public void removeShape(MyShape shape) {
+        shapesList.remove(shape);
+        setChanged();;
         notifyObservers();
     }
 }

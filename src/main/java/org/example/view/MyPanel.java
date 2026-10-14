@@ -18,6 +18,11 @@ public class MyPanel extends JPanel implements Observer {
     private final Controller controller;
     private final JMenuBar menuBar;
 
+    private JMenuItem undo;
+    private JMenuItem redo;
+
+
+
     public MyPanel(Controller controller) {
         this.controller = controller;
         addMouseListener(new MouseAdapter() {
@@ -50,6 +55,7 @@ public class MyPanel extends JPanel implements Observer {
         menuBar.add(fill);
         menuBar.add(tools);
         add(menuBar);
+        updateActionState();
     }
 
     private JMenu getShapes(Controller controller) {
@@ -117,21 +123,16 @@ public class MyPanel extends JPanel implements Observer {
     private  JMenu getTools(Controller controller){
         var tools = new JMenu("Инструменты");
 
-        var undo = new JMenuItem("Назад");
+        undo = new JMenuItem("Назад");
         undo.addActionListener((actionEvent)->{
-            controller.getModel().setShapesList(controller.getHistory().undo());
+            controller.getHistory().executeUndo();
         });
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,InputEvent.CTRL_DOWN_MASK));
-        var redo = new JMenuItem("Вперед");
+        redo = new JMenuItem("Вперед");
         redo.addActionListener((actionEvent)->{
-            controller.getModel().setShapesList(controller.getHistory().redo());
+            controller.getHistory().executeRedo();
         });
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,InputEvent.CTRL_DOWN_MASK));
-        var clear =new JMenuItem("Очистка");
-        clear.addActionListener((actionEvent)->{
-            controller.getModel().clearBoard();
-            controller.mouseReleased();
-        });
         var draw = new JMenuItem("Рисовать");
         draw.addActionListener((actionEvent)->{
             controller.setCurrentAction(new ActionDraw(controller.getModel()));
@@ -143,7 +144,6 @@ public class MyPanel extends JPanel implements Observer {
 
         tools.add(undo);
         tools.add(redo);
-        tools.add(clear);
         tools.add(draw);
         tools.add(move);
 
@@ -152,6 +152,13 @@ public class MyPanel extends JPanel implements Observer {
 
     public JMenuBar getMenuBar() {
         return menuBar;
+    }
+
+    private void updateActionState(){
+        if(undo!=null&&redo!=null){
+            undo.setEnabled(controller.getHistory().isEnableUndo());
+            redo.setEnabled(controller.getHistory().isEnableRedo());
+        }
     }
 
     @Override
@@ -163,6 +170,7 @@ public class MyPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+        updateActionState();
         repaint();
     }
 }

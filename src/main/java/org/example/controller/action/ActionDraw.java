@@ -4,41 +4,34 @@ import org.example.model.Model;
 import org.example.model.MyShape;
 
 import java.awt.Point;
-import java.awt.geom.Point2D;
 
-public class ActionDraw implements Action {
+public class ActionDraw extends Action {
     private final Model model;
-    private MyShape sampleShape;
     private MyShape shape;
-    private Point2D firstPoint;
 
     public ActionDraw(Model model) {
         this.model = model;
-        this.sampleShape = model.getCurrentShape();
-    }
-
-    public void setSampleShape(MyShape sampleShape) {
-        this.sampleShape = sampleShape;
     }
 
     public void createShape(Point point) {
-        this.firstPoint = point;
+        this.pressedPoint = point;
+        MyShape sampleShape = model.getCurrentShape();
         if (sampleShape != null) {
             this.shape = sampleShape.clone();
-            model.createCurrentShape(this.shape);
+            execute();
         }
     }
 
     public void stretchShape(Point point) {
-        if (shape != null && firstPoint != null) {
-            shape.setFrame(firstPoint, point);
+        releasedPoint = point;
+        if (shape != null && pressedPoint != null) {
+            shape.setFrame(pressedPoint, point);
         }
     }
 
     @Override
     public void mousePressed(Point point) {
         model.setMyShape();
-        update();
         createShape(point);
     }
 
@@ -48,7 +41,13 @@ public class ActionDraw implements Action {
     }
 
     @Override
-    public void update() {
-        setSampleShape(model.getCurrentShape());
+    public void execute() {
+        model.createCurrentShape(shape);
     }
+
+    @Override
+    public void unexecute() {
+        model.removeShape(shape);
+    }
+
 }

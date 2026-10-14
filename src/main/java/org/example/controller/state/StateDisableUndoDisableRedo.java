@@ -11,11 +11,11 @@ public class StateDisableUndoDisableRedo extends UndoRedoState {
 
     @Override
     public UndoRedoState undo() {
-        return this;
+        return determineNextState();
     }
 
     @Override
     public UndoRedoState redo() {
-        return this;
+        return determineNextState();
     }
 }

@@ -2,7 +2,8 @@ package org.example.controller;
 
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.Action;
-import org.example.controller.action.ActionsHistory;
+import org.example.controller.action.ActionMove;
+import org.example.controller.state.UndoMachine;
 import org.example.model.Model;
 import org.example.model.fill.Fill;
 import org.example.model.factory.ShapeType;
@@ -18,7 +19,7 @@ public class Controller {
     private final MyFrame frame;
     private final MyPanel panel;
     private Action currentAction;
-    private ActionsHistory history;
+    private UndoMachine history;
 
     private Controller() {
         model = new Model();
@@ -28,9 +29,9 @@ public class Controller {
         model.setMyShape();
 
         currentAction = new ActionDraw(model);
-        currentAction.update();
 
-        history = new ActionsHistory();
+
+        history = new UndoMachine();
 
         panel = new MyPanel(this);
 
@@ -51,7 +52,14 @@ public class Controller {
     }
 
     public void mouseReleased(){
-        history.saveState(model.getShapesList());
+        history.add(currentAction);
+        if (currentAction instanceof ActionDraw) {
+            currentAction = new ActionDraw(model);
+        } else if (currentAction instanceof ActionMove) {
+            currentAction = new ActionMove(model);
+        }
+        model.setChanged();
+        model.notifyObservers();
     }
 
     public void draw(Graphics2D g2) {
@@ -72,7 +80,7 @@ public class Controller {
         this.currentAction = currentAction;
     }
 
-    public ActionsHistory getHistory() {
+    public UndoMachine getHistory() {
         return history;
     }
 }

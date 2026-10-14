@@ -17,7 +17,7 @@ public class StateEnableUndoEnableRedo extends UndoRedoState {
         Action action = undoActivityList.pollLast();
         if (action != null) {
             redoActivityList.add(action);
-//            action.unexecute();
+            action.unexecute();
         }
         if (undoActivityList.isEmpty()) {
             return new StateDisableUndoEnableRedo(getUndoActivityList(), getRedoActivityList());
@@ -31,12 +31,8 @@ public class StateEnableUndoEnableRedo extends UndoRedoState {
         Action action = redoActivityList.pollLast();
         if (action != null) {
             undoActivityList.add(action);
-            // action.execute(); // Вызов выполнения действия, если поддерживается
+             action.execute(); // Вызов выполнения действия, если поддерживается
         }
-        if (redoActivityList.isEmpty()) {
-            return new StateEnableUndoDisableRedo(undoActivityList, redoActivityList);
-        } else {
-            return this;
-        }
+        return determineNextState();
     }
 }
