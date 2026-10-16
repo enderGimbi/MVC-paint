@@ -1,5 +1,6 @@
 package org.example.view;
 
+import lombok.Getter;
 import org.example.controller.Controller;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
@@ -16,6 +17,7 @@ import javax.swing.*;
 
 public class MyPanel extends JPanel implements Observer {
     private final Controller controller;
+    @Getter
     private final JMenuBar menuBar;
 
     public MyPanel(Controller controller) {
@@ -43,12 +45,14 @@ public class MyPanel extends JPanel implements Observer {
         var colors = getColors(controller);
         var fill = getFill(controller);
         var tools = getTools(controller);
+        var file = getFile(controller);
 
 
         menuBar.add(shapes);
         menuBar.add(colors);
         menuBar.add(fill);
         menuBar.add(tools);
+        menuBar.add(file);
         add(menuBar);
     }
 
@@ -114,7 +118,7 @@ public class MyPanel extends JPanel implements Observer {
         return fill;
     }
 
-    private  JMenu getTools(Controller controller){
+    private JMenu getTools(Controller controller){
         var tools = new JMenu("Инструменты");
 
         var undo = new JMenuItem("Назад");
@@ -150,8 +154,24 @@ public class MyPanel extends JPanel implements Observer {
         return tools;
     }
 
-    public JMenuBar getMenuBar() {
-        return menuBar;
+    private JMenu getFile(Controller controller){
+        JMenu file = new JMenu("Файл");
+        JMenuItem save = new JMenuItem("Сохранить");
+        save.addActionListener((actionEvent)->{
+            controller.getFileUtil().save();
+        });
+        JMenuItem load = new JMenuItem("Загрузить");
+        load.addActionListener((actionEvent)->{
+            controller.getFileUtil().load();
+            controller.getHistory().loadFromFile();
+            controller.getModel().setChanged();
+            controller.getModel().notifyObservers();
+        });
+
+        file.add(save);
+        file.add(load);
+
+        return file;
     }
 
     @Override
