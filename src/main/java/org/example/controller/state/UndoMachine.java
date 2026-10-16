@@ -35,4 +35,9 @@ public class UndoMachine {
         undoRedoState.addAction(action);
         undoRedoState = new StateEnableUndoDisableRedo(undoRedoState.getUndoActivityList(),undoRedoState.getRedoActivityList());
     }
+
+    public void loadFromFile(){
+        undoRedoState.clearAll();
+        undoRedoState = new StateDisableUndoDisableRedo(undoRedoState.getUndoActivityList(),undoRedoState.getRedoActivityList());
+    }
 }

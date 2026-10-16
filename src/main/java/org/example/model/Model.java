@@ -1,5 +1,6 @@
 package org.example.model;
 
+import lombok.Setter;
 import org.example.model.fill.FillBehavior;
 import org.example.model.factory.MyShapeFactory;
 import org.example.model.factory.ShapeType;
@@ -12,8 +13,11 @@ import java.util.List;
 
 public class Model extends Observable {
     private MyShape currentShape;
+    @Setter
     private Color color;
+    @Setter
     private ShapeType shape;
+    @Setter
     private FillBehavior fb;
 
     private List<MyShape> shapesList = new ArrayList<>();
@@ -44,19 +48,10 @@ public class Model extends Observable {
     }
 
     public Color getColor() { return color; }
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     public ShapeType getShape() { return shape; }
-    public void setShape(ShapeType shapeType) {
-        this.shape = shapeType;
-    }
 
     public FillBehavior getFb() { return fb; }
-    public void setFb(FillBehavior fb) {
-        this.fb = fb;
-    }
 
     public MyShape getCurrentShape() {
         return currentShape;

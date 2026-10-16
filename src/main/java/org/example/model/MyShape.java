@@ -1,19 +1,27 @@
 package org.example.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.model.fill.Fill;
 import org.example.model.fill.FillBehavior;
+import org.example.model.fill.NoFill;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.io.Serializable;
 
-public class MyShape implements Cloneable {
+public class MyShape implements Cloneable, Serializable {
     private final Color color;
     private final RectangularShape shape;
     private final FillBehavior fb;
+    @Setter
+    @Getter
     private Point2D firstPoint;
+    @Setter
+    @Getter
     private Point2D secondPoint;
 
     public MyShape() {
@@ -45,10 +53,10 @@ public class MyShape implements Cloneable {
     @Override
     public MyShape clone() {
         FillBehavior newFb;
-        if (this.fb instanceof org.example.model.fill.NoFill) {
-            newFb = new org.example.model.fill.NoFill();
+        if (this.fb instanceof NoFill) {
+            newFb = new NoFill();
         } else {
-            newFb = new org.example.model.fill.Fill();
+            newFb = new Fill();
         }
         newFb.setColor(this.color);
 
@@ -63,19 +71,4 @@ public class MyShape implements Cloneable {
         return cloned;
     }
 
-    public Point2D getFirstPoint() {
-        return firstPoint;
-    }
-
-    public void setFirstPoint(Point2D firstPoint) {
-        this.firstPoint = firstPoint;
-    }
-
-    public Point2D getSecondPoint() {
-        return secondPoint;
-    }
-
-    public void setSecondPoint(Point2D secondPoint) {
-        this.secondPoint = secondPoint;
-    }
 }

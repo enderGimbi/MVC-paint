@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.Action;
 import org.example.controller.action.ActionMove;
@@ -7,6 +9,7 @@ import org.example.controller.state.UndoMachine;
 import org.example.model.Model;
 import org.example.model.fill.Fill;
 import org.example.model.factory.ShapeType;
+import org.example.utils.SaveToFileUtil;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
@@ -15,11 +18,16 @@ import java.awt.*;
 
 public class Controller {
     private static Controller instance;
+    @Getter
     private final Model model;
     private final MyFrame frame;
     private final MyPanel panel;
+    @Setter
     private Action currentAction;
+    @Getter
     private UndoMachine history;
+    @Getter
+    private SaveToFileUtil fileUtil;
 
     private Controller() {
         model = new Model();
@@ -30,8 +38,9 @@ public class Controller {
 
         currentAction = new ActionDraw(model);
 
-
         history = new UndoMachine();
+
+        fileUtil = new SaveToFileUtil(model);
 
         panel = new MyPanel(this);
 
@@ -72,15 +81,4 @@ public class Controller {
         }
     }
 
-    public Model getModel() {
-        return model;
-    }
-
-    public void setCurrentAction(Action currentAction) {
-        this.currentAction = currentAction;
-    }
-
-    public UndoMachine getHistory() {
-        return history;
-    }
 }

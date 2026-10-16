@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.RectangularShape;
+import java.io.Serializable;
 
-public class NoFill implements FillBehavior {
+public class NoFill implements FillBehavior, Serializable {
     private Color color;
     private RectangularShape shape;
 
