@@ -20,6 +20,10 @@ public class MyPanel extends JPanel implements Observer {
     @Getter
     private final JMenuBar menuBar;
 
+    JMenuItem undo = new JMenuItem("Назад");
+    JMenuItem redo = new JMenuItem("Вперед");
+
+
     public MyPanel(Controller controller) {
         this.controller = controller;
         addMouseListener(new MouseAdapter() {
@@ -121,15 +125,17 @@ public class MyPanel extends JPanel implements Observer {
     private JMenu getTools(Controller controller){
         var tools = new JMenu("Инструменты");
 
-        var undo = new JMenuItem("Назад");
         undo.addActionListener((actionEvent)->{
-            controller.getModel().setShapesList(controller.getHistory().undo());
+            controller.getHistory().undo();
+            updateActionState();
         });
+        undo.setEnabled(false);
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,InputEvent.CTRL_DOWN_MASK));
-        var redo = new JMenuItem("Вперед");
         redo.addActionListener((actionEvent)->{
-            controller.getModel().setShapesList(controller.getHistory().redo());
+            controller.getHistory().redo();
+            updateActionState();
         });
+        redo.setEnabled(false);
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,InputEvent.CTRL_DOWN_MASK));
         var clear =new JMenuItem("Очистка");
         clear.addActionListener((actionEvent)->{
@@ -174,6 +180,11 @@ public class MyPanel extends JPanel implements Observer {
         return file;
     }
 
+    public void updateActionState(){
+        undo.setEnabled(!controller.getHistory().isUndoEmpty());
+        redo.setEnabled(!controller.getHistory().isRedoEmpty());
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -183,6 +194,7 @@ public class MyPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+        updateActionState();
         repaint();
     }
 }

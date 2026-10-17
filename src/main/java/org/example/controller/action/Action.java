@@ -1,11 +1,22 @@
 package org.example.controller.action;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
-public interface Action {
-    public void mousePressed(Point point);
+public abstract class Action {
 
-    public void mouseDragged(Point point);
+    protected Point2D pressedPoint;
+    protected Point2D releasedPoint;
 
-    public void update();
+    public void mousePressed(Point point) {
+
+    }
+
+    public void mouseDragged(Point point) {
+
+    }
+
+    public abstract void execute();
+    public abstract void unexecute();
+
 }

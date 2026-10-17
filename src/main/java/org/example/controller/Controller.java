@@ -36,7 +36,6 @@ public class Controller {
         model.setMyShape();
 
         currentAction = new ActionDraw(model);
-        currentAction.update();
 
         history = new ActionsHistory();
 
@@ -61,7 +60,8 @@ public class Controller {
     }
 
     public void mouseReleased(){
-        history.saveState(model.getShapesList());
+        history.saveState(currentAction);
+        panel.updateActionState();
     }
 
     public void draw(Graphics2D g2) {
