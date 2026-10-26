@@ -1,5 +1,6 @@
 package org.example.model;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.example.model.fill.FillBehavior;
 import org.example.model.factory.MyShapeFactory;
@@ -7,10 +8,10 @@ import org.example.model.factory.ShapeType;
 import org.example.utils.Observable;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Model extends Observable {
     private MyShape currentShape;
     @Setter
@@ -35,36 +36,10 @@ public class Model extends Observable {
         this.notifyObservers();
     }
 
-    public void changeShape(Point2D x, Point2D y) {
-        currentShape.setFrame(x, y);
-        this.setChanged();
-        this.notifyObservers();
-    }
-
     public void draw(Graphics2D g) {
         for (MyShape s : shapesList) {
             s.draw(g);
         }
-    }
-
-    public Color getColor() { return color; }
-
-    public ShapeType getShape() { return shape; }
-
-    public FillBehavior getFb() { return fb; }
-
-    public MyShape getCurrentShape() {
-        return currentShape;
-    }
-
-    public void clearBoard(){
-        shapesList.clear();
-        setChanged();
-        notifyObservers();
-    }
-
-    public List<MyShape> getShapesList() {
-        return shapesList;
     }
 
     public void setShapesList(List<MyShape> shapesList) {
@@ -75,7 +50,7 @@ public class Model extends Observable {
 
     public void removeShape(MyShape shape) {
         shapesList.remove(shape);
-        setChanged();;
+        setChanged();
         notifyObservers();
     }
 }

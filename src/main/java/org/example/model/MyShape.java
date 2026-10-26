@@ -16,30 +16,23 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 
+@Getter
 public class MyShape implements Cloneable, Serializable {
-    @Getter
-    private String shapeType;
-    @Getter
-    private int colorRgb;
-    @Getter
-    private boolean filled;
+    private final String shapeType;
+    private final int colorRgb;
+    private final boolean filled;
 
-    @Getter
     @Setter
     private Point2D firstPoint;
 
-    @Getter
     @Setter
     private Point2D secondPoint;
-    @Getter
     @JsonIgnore
-    private Color color;
-    @Getter
+    private final Color color;
     @JsonIgnore
-    private RectangularShape shape;
-    @Getter
+    private final RectangularShape shape;
     @JsonIgnore
-    private FillBehavior fb;
+    private final FillBehavior fb;
 
     public MyShape() {
         color = Color.BLUE;
@@ -101,6 +94,7 @@ public class MyShape implements Cloneable, Serializable {
     }
 
     @Override
+    @SuppressWarnings("all")
     public MyShape clone() {
         FillBehavior newFb;
         if (this.fb instanceof NoFill) {
