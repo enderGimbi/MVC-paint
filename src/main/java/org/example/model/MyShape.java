@@ -1,5 +1,8 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.model.fill.Fill;
@@ -14,15 +17,29 @@ import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 
 public class MyShape implements Cloneable, Serializable {
-    private final Color color;
-    private final RectangularShape shape;
-    private final FillBehavior fb;
-    @Setter
     @Getter
+    private String shapeType;
+    @Getter
+    private int colorRgb;
+    @Getter
+    private boolean filled;
+
+    @Getter
+    @Setter
     private Point2D firstPoint;
-    @Setter
+
     @Getter
+    @Setter
     private Point2D secondPoint;
+    @Getter
+    @JsonIgnore
+    private Color color;
+    @Getter
+    @JsonIgnore
+    private RectangularShape shape;
+    @Getter
+    @JsonIgnore
+    private FillBehavior fb;
 
     public MyShape() {
         color = Color.BLUE;
@@ -30,6 +47,10 @@ public class MyShape implements Cloneable, Serializable {
         fb = new Fill();
         fb.setColor(color);
         fb.setShape(shape);
+
+        this.shapeType = "RECTANGLE";
+        this.colorRgb = color.getRGB();
+        this.filled = true;
     }
 
     public MyShape(Shape shape, Color color, FillBehavior fill) {
@@ -38,7 +59,36 @@ public class MyShape implements Cloneable, Serializable {
         fb = fill;
         fb.setColor(color);
         fb.setShape((RectangularShape) shape);
+
+        //для json
+        this.shapeType = (shape instanceof Ellipse2D)?"ELLIPSE":"RECTANGLE";
+        this.colorRgb = color.getRGB();
+        this.filled = !(fill instanceof NoFill);
     }
+
+    @JsonCreator
+    public MyShape(
+            @JsonProperty("shapeType") String shapeType,
+            @JsonProperty("colorRgb") int colorRGB,
+            @JsonProperty("filled") boolean filled,
+            @JsonProperty("firstPoint") Point2D.Double firstPoint,
+            @JsonProperty("secondPoint") Point2D.Double secondPoint)
+    {
+        this.shapeType = shapeType!=null?shapeType:"RECTANGLE";
+        this.colorRgb = colorRGB;
+        this.filled = filled;
+        this.firstPoint = firstPoint!=null?firstPoint:new Point2D.Double();
+        this.secondPoint = secondPoint!=null?secondPoint:new Point2D.Double();
+
+        this.color = new Color(colorRGB);
+        this.shape = "ELLIPSE".equalsIgnoreCase(shapeType)?new Ellipse2D.Double():new Rectangle2D.Double();
+
+        this.fb = filled?new Fill():new NoFill();
+        this.fb.setColor(this.color);
+        this.fb.setShape(this.shape);
+        setFrame(this.getFirstPoint(),this.getSecondPoint());
+    }
+
 
     public void setFrame(Point2D x, Point2D y) {
         this.firstPoint = x;

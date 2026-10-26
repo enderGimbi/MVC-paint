@@ -15,6 +15,7 @@ import org.example.view.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Controller {
     private static Controller instance;
@@ -40,7 +41,11 @@ public class Controller {
 
         history = new UndoMachine();
 
-        fileUtil = new SaveToFileUtil(model);
+        try {
+            fileUtil = new SaveToFileUtil(model);
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при инициализации файла shapes.json");
+        }
 
         panel = new MyPanel(this);
 
