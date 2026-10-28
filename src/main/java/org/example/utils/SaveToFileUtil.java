@@ -2,7 +2,6 @@ package org.example.utils;
 
 import org.example.model.Model;
 import org.example.model.MyShape;
-import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.awt.*;

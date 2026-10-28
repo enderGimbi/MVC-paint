@@ -15,54 +15,54 @@ public class ActionMove extends Action {
         this.model = model;
     }
 
-    public void moveShape(Point point){
-        if(pressedPoint!=null&&currentShape!=null){
-            int dx = (int) (point.x-pressedPoint.getX());
-            int dy = (int) (point.y-pressedPoint.getY());
+    public void moveShape(Point point) {
+        if (pressedPoint != null && currentShape != null) {
+            int dx = (int) (point.x - pressedPoint.getX());
+            int dy = (int) (point.y - pressedPoint.getY());
 
-            totalDx+=dx;
-            totalDy+=dy;
+            totalDx += dx;
+            totalDy += dy;
 
             Point firstPoint = new Point((Point) currentShape.getFirstPoint());
             Point secondPoint = new Point((Point) currentShape.getSecondPoint());
-            firstPoint.translate(dx,dy);
-            secondPoint.translate(dx,dy);
+            firstPoint.translate(dx, dy);
+            secondPoint.translate(dx, dy);
 
-            currentShape.setFrame(firstPoint,secondPoint);
-            pressedPoint=point;
+            currentShape.setFrame(firstPoint, secondPoint);
+            pressedPoint = point;
         }
     }
 
-    public void chooseShape(Point point){
-        currentShape=null;
-        if(model.getShapesList().isEmpty()){
+    public void chooseShape(Point point) {
+        currentShape = null;
+        if (model.getShapesList().isEmpty()) {
             return;
         }
 
-        for (int i = model.getShapesList().size()-1; i >-1; i--) {
+        for (int i = model.getShapesList().size() - 1; i > -1; i--) {
             MyShape shape = model.getShapesList().get(i);
-            if(isCursorOnShape(shape,point)){
+            if (isCursorOnShape(shape, point)) {
                 currentShape = shape;
                 pressedPoint = point;
             }
         }
     }
 
-    private boolean isCursorOnShape(MyShape shape,Point point){
+    private boolean isCursorOnShape(MyShape shape, Point point) {
         if (shape == null || point == null) {
             return false;
         }
 
-        boolean checkX = shape.getFirstPoint().getX()<point.x
-                &&shape.getSecondPoint().getX()>point.x
+        boolean checkX = shape.getFirstPoint().getX() < point.x
+                && shape.getSecondPoint().getX() > point.x
                 ||
-                shape.getFirstPoint().getX()>point.x
-                &&shape.getSecondPoint().getX()<point.x;
-        boolean checkY = shape.getFirstPoint().getY()<point.y
-                &&shape.getSecondPoint().getY()>point.y
+                shape.getFirstPoint().getX() > point.x
+                        && shape.getSecondPoint().getX() < point.x;
+        boolean checkY = shape.getFirstPoint().getY() < point.y
+                && shape.getSecondPoint().getY() > point.y
                 ||
-                shape.getFirstPoint().getY()>point.y
-                &&shape.getSecondPoint().getY()<point.y;
+                shape.getFirstPoint().getY() > point.y
+                        && shape.getSecondPoint().getY() < point.y;
         return checkY && checkX;
     }
 
@@ -78,8 +78,8 @@ public class ActionMove extends Action {
 
     @Override
     public void execute() {
-        if(currentShape!=null){
-            shiftShape(totalDx,totalDy);
+        if (currentShape != null) {
+            shiftShape(totalDx, totalDy);
         }
         model.setChanged();
         model.notifyObservers();
@@ -87,19 +87,19 @@ public class ActionMove extends Action {
 
     @Override
     public void unexecute() {
-        if(currentShape!=null){
-            shiftShape(-totalDx,-totalDy);
+        if (currentShape != null) {
+            shiftShape(-totalDx, -totalDy);
         }
         model.setChanged();
         model.notifyObservers();
     }
 
-    private void shiftShape(int dx,int dy){
+    private void shiftShape(int dx, int dy) {
         Point firstPoint = new Point((Point) currentShape.getFirstPoint());
         Point seconfPoint = new Point((Point) currentShape.getSecondPoint());
         firstPoint.translate(dx, dy);
         seconfPoint.translate(dx, dy);
-        currentShape.setFrame(firstPoint,seconfPoint);
+        currentShape.setFrame(firstPoint, seconfPoint);
     }
 
 }

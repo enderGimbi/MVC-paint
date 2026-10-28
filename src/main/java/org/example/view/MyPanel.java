@@ -7,6 +7,7 @@ import org.example.controller.action.ActionMove;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.model.factory.ShapeType;
+import org.example.utils.DraggableListener;
 import org.example.utils.Observable;
 import org.example.utils.Observer;
 
@@ -60,6 +61,20 @@ public class MyPanel extends JPanel implements Observer {
         menuBar.add(file);
         add(menuBar);
         updateActionState();
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(null);
+        mainPanel.setBackground(Color.BLACK);
+        JPanel draggablePanel = new JPanel();
+        draggablePanel.setBackground(Color.GREEN);
+        DraggableListener listener = new DraggableListener(draggablePanel);
+        draggablePanel.addMouseListener(listener);
+        draggablePanel.addMouseMotionListener(listener);
+        mainPanel.add(draggablePanel);
+        JLabel label = new JLabel("тест");
+        draggablePanel.add(label);
+        add(mainPanel);
+
     }
 
     private JMenu getShapes(Controller controller) {
