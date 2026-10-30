@@ -3,7 +3,6 @@ package org.example.utils;
 import java.util.Vector;
 
 public class Observable {
-    private boolean changed = false;
     private final Vector<Observer> subscribers;
 
     public Observable() {
@@ -27,21 +26,10 @@ public class Observable {
     }
 
 
-    public void setChanged() {
-        changed=true;
-    }
-
-    public void clearChanged(){
-        changed=false;
-    }
-
     public void notifyObservers() {
         Object[] arrLocal;
         synchronized (this){
-            if(!changed)
-                return;
             arrLocal = subscribers.toArray();
-            clearChanged();
         }
         for (int i = arrLocal.length-1; i >=0 ; i--) {
             ((Observer)arrLocal[i]).update(this,null);

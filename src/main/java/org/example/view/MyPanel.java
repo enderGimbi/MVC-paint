@@ -7,12 +7,12 @@ import org.example.controller.action.ActionMove;
 import org.example.model.fill.Fill;
 import org.example.model.fill.NoFill;
 import org.example.model.factory.ShapeType;
-import org.example.utils.DraggableListener;
 import org.example.utils.Observable;
 import org.example.utils.Observer;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import javax.swing.*;
 
 
@@ -21,9 +21,10 @@ public class MyPanel extends JPanel implements Observer {
     @Getter
     private final JMenuBar menuBar;
 
-    private JMenuItem undo;
-    private JMenuItem redo;
-
+    private JMenuItem undoMenuItem;
+    private JMenuItem redoMenuItem;
+    private JButton undoButton;
+    private JButton redoButton;
 
 
     public MyPanel(Controller controller) {
@@ -60,20 +61,13 @@ public class MyPanel extends JPanel implements Observer {
         menuBar.add(tools);
         menuBar.add(file);
         add(menuBar);
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel,BoxLayout.Y_AXIS));
+        topPanel.add(createToolBar(),BorderLayout.CENTER);
+        add(topPanel,BorderLayout.NORTH);
         updateActionState();
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(null);
-        mainPanel.setBackground(Color.BLACK);
-        JPanel draggablePanel = new JPanel();
-        draggablePanel.setBackground(Color.GREEN);
-        DraggableListener listener = new DraggableListener(draggablePanel);
-        draggablePanel.addMouseListener(listener);
-        draggablePanel.addMouseMotionListener(listener);
-        mainPanel.add(draggablePanel);
-        JLabel label = new JLabel("тест");
-        draggablePanel.add(label);
-        add(mainPanel);
 
     }
 
@@ -142,16 +136,16 @@ public class MyPanel extends JPanel implements Observer {
     private JMenu getTools(Controller controller){
         var tools = new JMenu("Инструменты");
 
-        undo = new JMenuItem("Назад");
-        undo.addActionListener((actionEvent)->{
+        undoMenuItem = new JMenuItem("Назад");
+        undoMenuItem.addActionListener((actionEvent)->{
             controller.getHistory().executeUndo();
         });
-        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,InputEvent.CTRL_DOWN_MASK));
-        redo = new JMenuItem("Вперед");
-        redo.addActionListener((actionEvent)->{
+        undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,InputEvent.CTRL_DOWN_MASK));
+        redoMenuItem = new JMenuItem("Вперед");
+        redoMenuItem.addActionListener((actionEvent)->{
             controller.getHistory().executeRedo();
         });
-        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,InputEvent.CTRL_DOWN_MASK));
+        redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,InputEvent.CTRL_DOWN_MASK));
         var draw = new JMenuItem("Рисовать");
         draw.addActionListener((actionEvent)->{
             controller.setCurrentAction(new ActionDraw(controller.getModel()));
@@ -161,8 +155,8 @@ public class MyPanel extends JPanel implements Observer {
             controller.setCurrentAction(new ActionMove(controller.getModel()));
         });
 
-        tools.add(undo);
-        tools.add(redo);
+        tools.add(undoMenuItem);
+        tools.add(redoMenuItem);
         tools.add(draw);
         tools.add(move);
 
@@ -179,7 +173,6 @@ public class MyPanel extends JPanel implements Observer {
         load.addActionListener((actionEvent)->{
             controller.getFileUtil().load();
             controller.getHistory().loadFromFile();
-            controller.getModel().setChanged();
             controller.getModel().notifyObservers();
         });
 
@@ -189,10 +182,77 @@ public class MyPanel extends JPanel implements Observer {
         return file;
     }
 
+    private JToolBar createToolBar(){
+        JToolBar toolBar = new JToolBar("Панель инструментов");
+        toolBar.setFloatable(true);
+
+        ImageIcon undoIcon = loadIcon("/icons/undo_16x16.png");
+        ImageIcon redoIcon = loadIcon("/icons/redo_16x16.png");
+        ImageIcon drawIcon = loadIcon("/icons/draw_16x16.png");
+        ImageIcon moveIcon = loadIcon("/icons/move_16x16.png");
+        ImageIcon rectangularIcon = loadIcon("/icons/rectangular_16x16.png");
+        ImageIcon ellipseIcon = loadIcon("/icons/ellipse_16x16.png");
+        ImageIcon fillIcon = loadIcon("/icons/fill_16x16.png");
+        ImageIcon noFillIcon = loadIcon("/icons/no_fill_16x16.png");
+
+
+        undoButton = new JButton(undoIcon);
+        undoButton.setToolTipText("Отменить действие");
+        undoButton.addActionListener(e -> {controller.getHistory().executeUndo();});
+        redoButton = new JButton(redoIcon);
+        redoButton.setToolTipText("Восстановить действие");
+        redoButton.addActionListener(e -> {controller.getHistory().executeRedo();});
+        JButton drawButton = new JButton(drawIcon);
+        drawButton.setToolTipText("Рисовать");
+        drawButton.addActionListener(e -> {controller.setCurrentAction(new ActionDraw(controller.getModel()));});
+        JButton moveButton = new JButton(moveIcon);
+        moveButton.setToolTipText("Двигать");
+        moveButton.addActionListener(e->{controller.setCurrentAction(new ActionMove(controller.getModel()));});
+        JButton rectangularButton = new JButton(rectangularIcon);
+        rectangularButton.setToolTipText("Прямоугольник");
+        rectangularButton.addActionListener(e->{controller.getModel().setShape(ShapeType.Rectangle);});
+        JButton ellipseButton = new JButton(ellipseIcon);
+        ellipseButton.setToolTipText("Эллипс");
+        ellipseButton.addActionListener(e->{controller.getModel().setShape(ShapeType.Ellipse);});
+        JButton fillButton = new JButton(fillIcon);
+        fillButton.setToolTipText("С заполнением");
+        fillButton.addActionListener(e -> {controller.getModel().setFb(new Fill());});
+        JButton noFillButton = new JButton(noFillIcon);
+        noFillButton.setToolTipText("Без заполнения");
+        noFillButton.addActionListener(e->controller.getModel().setFb(new NoFill()));
+
+        toolBar.add(undoButton);
+        toolBar.add(redoButton);
+        toolBar.add(drawButton);
+        toolBar.add(moveButton);
+        toolBar.add(rectangularButton);
+        toolBar.add(ellipseButton);
+        toolBar.add(fillButton);
+        toolBar.add(noFillButton);
+
+        return toolBar;
+    }
+
+    private ImageIcon loadIcon(String pathToIcon) {
+        URL imgURL = getClass().getResource(pathToIcon);
+        if(imgURL!=null){
+            ImageIcon imageIcon = new ImageIcon(imgURL);
+            Image img = imageIcon.getImage();
+            Image scaledImg = img.getScaledInstance(16,16,Image.SCALE_DEFAULT);
+            return new ImageIcon(scaledImg);
+        }
+        else{
+            System.err.println("Не удалось найти файл иконки по пути"+ pathToIcon);
+            return null;
+        }
+    }
+
     private void updateActionState(){
-        if(undo!=null&&redo!=null){
-            undo.setEnabled(controller.getHistory().isEnableUndo());
-            redo.setEnabled(controller.getHistory().isEnableRedo());
+        if(undoMenuItem !=null&& redoMenuItem !=null){
+            undoMenuItem.setEnabled(controller.getHistory().isEnableUndo());
+            redoMenuItem.setEnabled(controller.getHistory().isEnableRedo());
+            undoButton.setEnabled(controller.getHistory().isEnableUndo());
+            redoButton.setEnabled(controller.getHistory().isEnableRedo());
         }
     }
 

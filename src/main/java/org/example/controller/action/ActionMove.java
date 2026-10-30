@@ -81,7 +81,6 @@ public class ActionMove extends Action {
         if (currentShape != null) {
             shiftShape(totalDx, totalDy);
         }
-        model.setChanged();
         model.notifyObservers();
     }
 
@@ -90,7 +89,6 @@ public class ActionMove extends Action {
         if (currentShape != null) {
             shiftShape(-totalDx, -totalDy);
         }
-        model.setChanged();
         model.notifyObservers();
     }
 

@@ -32,8 +32,7 @@ public class Model extends Observable {
         if (shape!=null && !shapesList.contains(shape)) {
             shapesList.add(shape);
         }
-        this.setChanged();
-        this.notifyObservers();
+        notifyObservers();
     }
 
     public void draw(Graphics2D g) {
@@ -44,13 +43,11 @@ public class Model extends Observable {
 
     public void setShapesList(List<MyShape> shapesList) {
         this.shapesList = (shapesList!=null)?shapesList:this.shapesList;
-        setChanged();
         notifyObservers();
     }
 
     public void removeShape(MyShape shape) {
         shapesList.remove(shape);
-        setChanged();
         notifyObservers();
     }
 }

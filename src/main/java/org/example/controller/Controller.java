@@ -61,7 +61,6 @@ public class Controller {
 
     public void mouseDragged(Point p) {
         currentAction.mouseDragged(p);
-        model.setChanged();
         model.notifyObservers();
     }
 
@@ -72,7 +71,6 @@ public class Controller {
         } else if (currentAction instanceof ActionMove) {
             currentAction = new ActionMove(model);
         }
-        model.setChanged();
         model.notifyObservers();
     }
 
