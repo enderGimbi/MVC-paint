@@ -64,7 +64,7 @@ public class Controller {
         model.notifyObservers();
     }
 
-    public void mouseReleased(){
+    public void mouseReleased() {
         history.add(currentAction);
         if (currentAction instanceof ActionDraw) {
             currentAction = new ActionDraw(model);
@@ -78,8 +78,8 @@ public class Controller {
         model.draw(g2);
     }
 
-    public static void getInstance(){
-        if(instance==null) {
+    public static void getInstance() {
+        if (instance == null) {
             instance = new Controller();
         }
     }

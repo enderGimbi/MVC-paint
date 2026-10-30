@@ -33,11 +33,11 @@ public class UndoMachine {
     public void add(Action action) {
         undoRedoState.clearHistory();
         undoRedoState.addAction(action);
-        undoRedoState = new StateEnableUndoDisableRedo(undoRedoState.getUndoActivityList(),undoRedoState.getRedoActivityList());
+        undoRedoState = new StateEnableUndoDisableRedo(undoRedoState.getUndoActivityList(), undoRedoState.getRedoActivityList());
     }
 
-    public void loadFromFile(){
+    public void loadFromFile() {
         undoRedoState.clearAll();
-        undoRedoState = new StateDisableUndoDisableRedo(undoRedoState.getUndoActivityList(),undoRedoState.getRedoActivityList());
+        undoRedoState = new StateDisableUndoDisableRedo(undoRedoState.getUndoActivityList(), undoRedoState.getRedoActivityList());
     }
 }

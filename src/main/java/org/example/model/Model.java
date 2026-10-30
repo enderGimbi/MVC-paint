@@ -24,12 +24,12 @@ public class Model extends Observable {
     private List<MyShape> shapesList = new ArrayList<>();
 
     public void setMyShape() {
-        this.currentShape = MyShapeFactory.createShape(shape,color,fb);
+        this.currentShape = MyShapeFactory.createShape(shape, color, fb);
     }
 
     public void createCurrentShape(MyShape shape) {
         this.currentShape = shape;
-        if (shape!=null && !shapesList.contains(shape)) {
+        if (shape != null && !shapesList.contains(shape)) {
             shapesList.add(shape);
         }
         notifyObservers();
@@ -42,7 +42,7 @@ public class Model extends Observable {
     }
 
     public void setShapesList(List<MyShape> shapesList) {
-        this.shapesList = (shapesList!=null)?shapesList:this.shapesList;
+        this.shapesList = (shapesList != null) ? shapesList : this.shapesList;
         notifyObservers();
     }
 

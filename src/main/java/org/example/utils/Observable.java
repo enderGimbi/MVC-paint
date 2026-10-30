@@ -9,17 +9,17 @@ public class Observable {
         subscribers = new Vector<>();
     }
 
-    public synchronized void subscribe(Observer observer){
-        if(observer==null){
+    public synchronized void subscribe(Observer observer) {
+        if (observer == null) {
             throw new NullPointerException();
         }
-        if(!subscribers.contains(observer)){
+        if (!subscribers.contains(observer)) {
             subscribers.add(observer);
         }
     }
 
-    public synchronized void unsubscribe(Observer observer){
-        if(observer==null){
+    public synchronized void unsubscribe(Observer observer) {
+        if (observer == null) {
             throw new NullPointerException();
         }
         subscribers.remove(observer);
@@ -28,11 +28,11 @@ public class Observable {
 
     public void notifyObservers() {
         Object[] arrLocal;
-        synchronized (this){
+        synchronized (this) {
             arrLocal = subscribers.toArray();
         }
-        for (int i = arrLocal.length-1; i >=0 ; i--) {
-            ((Observer)arrLocal[i]).update(this,null);
+        for (int i = arrLocal.length - 1; i >= 0; i--) {
+            ((Observer) arrLocal[i]).update(this, null);
         }
     }
 }

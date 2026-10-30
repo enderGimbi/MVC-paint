@@ -16,18 +16,22 @@ public abstract class UndoRedoState {
         this.undoActivityList = undoActivityList;
         this.redoActivityList = redoActivity;
     }
+
     public abstract UndoRedoState undo();
+
     public abstract UndoRedoState redo();
 
-    public void clearHistory(){
+    public void clearHistory() {
         redoActivityList.clear();
     }
-    public void clearAll(){
+
+    public void clearAll() {
         redoActivityList.clear();
         undoActivityList.clear();
     }
-    public void addAction(Action action){
-        if(undoActivityList.size() != MAX_UNDO){
+
+    public void addAction(Action action) {
+        if (undoActivityList.size() != MAX_UNDO) {
             undoActivityList.add(action);
         }
     }

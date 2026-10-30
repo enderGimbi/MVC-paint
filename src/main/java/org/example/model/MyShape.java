@@ -54,7 +54,7 @@ public class MyShape implements Cloneable, Serializable {
         fb.setShape((RectangularShape) shape);
 
         //для json
-        this.shapeType = (shape instanceof Ellipse2D)?"ELLIPSE":"RECTANGLE";
+        this.shapeType = (shape instanceof Ellipse2D) ? "ELLIPSE" : "RECTANGLE";
         this.colorRgb = color.getRGB();
         this.filled = !(fill instanceof NoFill);
     }
@@ -65,21 +65,20 @@ public class MyShape implements Cloneable, Serializable {
             @JsonProperty("colorRgb") int colorRGB,
             @JsonProperty("filled") boolean filled,
             @JsonProperty("firstPoint") Point2D.Double firstPoint,
-            @JsonProperty("secondPoint") Point2D.Double secondPoint)
-    {
-        this.shapeType = shapeType!=null?shapeType:"RECTANGLE";
+            @JsonProperty("secondPoint") Point2D.Double secondPoint) {
+        this.shapeType = shapeType != null ? shapeType : "RECTANGLE";
         this.colorRgb = colorRGB;
         this.filled = filled;
-        this.firstPoint = firstPoint!=null?firstPoint:new Point2D.Double();
-        this.secondPoint = secondPoint!=null?secondPoint:new Point2D.Double();
+        this.firstPoint = firstPoint != null ? firstPoint : new Point2D.Double();
+        this.secondPoint = secondPoint != null ? secondPoint : new Point2D.Double();
 
         this.color = new Color(colorRGB);
-        this.shape = "ELLIPSE".equalsIgnoreCase(shapeType)?new Ellipse2D.Double():new Rectangle2D.Double();
+        this.shape = "ELLIPSE".equalsIgnoreCase(shapeType) ? new Ellipse2D.Double() : new Rectangle2D.Double();
 
-        this.fb = filled?new Fill():new NoFill();
+        this.fb = filled ? new Fill() : new NoFill();
         this.fb.setColor(this.color);
         this.fb.setShape(this.shape);
-        setFrame(this.getFirstPoint(),this.getSecondPoint());
+        setFrame(this.getFirstPoint(), this.getSecondPoint());
     }
 
 
