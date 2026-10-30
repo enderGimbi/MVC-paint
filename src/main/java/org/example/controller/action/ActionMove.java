@@ -23,8 +23,8 @@ public class ActionMove extends Action {
             totalDx += dx;
             totalDy += dy;
 
-            Point firstPoint = new Point((Point) currentShape.getFirstPoint());
-            Point secondPoint = new Point((Point) currentShape.getSecondPoint());
+            Point firstPoint = new Point((int) currentShape.getFirstPoint().getX(), (int) currentShape.getFirstPoint().getY());
+            Point secondPoint = new Point((int) currentShape.getSecondPoint().getX(), (int) currentShape.getSecondPoint().getY());
             firstPoint.translate(dx, dy);
             secondPoint.translate(dx, dy);
 
@@ -93,8 +93,8 @@ public class ActionMove extends Action {
     }
 
     private void shiftShape(int dx, int dy) {
-        Point firstPoint = new Point((Point) currentShape.getFirstPoint());
-        Point seconfPoint = new Point((Point) currentShape.getSecondPoint());
+        Point firstPoint = new Point((int) currentShape.getFirstPoint().getX(), (int) currentShape.getFirstPoint().getY());
+        Point seconfPoint = new Point((int) currentShape.getSecondPoint().getX(), (int) currentShape.getSecondPoint().getY());
         firstPoint.translate(dx, dy);
         seconfPoint.translate(dx, dy);
         currentShape.setFrame(firstPoint, seconfPoint);
