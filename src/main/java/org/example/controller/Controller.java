@@ -6,8 +6,6 @@ import org.example.controller.action.ActionDraw;
 import org.example.controller.action.Action;
 import org.example.controller.state.UndoMachine;
 import org.example.model.Model;
-import org.example.model.fill.Fill;
-import org.example.model.factory.ShapeType;
 import org.example.utils.SaveToFileUtil;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;

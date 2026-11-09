@@ -75,11 +75,11 @@ public class MyPanel extends JPanel implements Observer {
 
         JMenuItem ellipse = new JMenuItem("Эллипс");
         ellipse.addActionListener((ActionEvent e) -> {
-            controller.getModel().setShape(ShapeType.ELLIPSE);
+            controller.getModel().changeShape(ShapeType.ELLIPSE);
         });
         JMenuItem rectangle = new JMenuItem("Прямоугольник");
         rectangle.addActionListener((ActionListener) -> {
-            controller.getModel().setShape(ShapeType.RECTANGLE);
+            controller.getModel().changeShape(ShapeType.RECTANGLE);
         });
 
         shapes.add(ellipse);
@@ -96,15 +96,15 @@ public class MyPanel extends JPanel implements Observer {
 
         JMenuItem green = new JMenuItem("Зеленый");
         green.addActionListener((ActionListener) -> {
-            controller.getModel().setColor(Color.GREEN);
+            controller.getModel().changeColor(Color.GREEN);
         });
         JMenuItem red = new JMenuItem("Красный");
         red.addActionListener((actionEvent) -> {
-            controller.getModel().setColor(Color.RED);
+            controller.getModel().shape.setColor(Color.RED);
         });
         JMenuItem blue = new JMenuItem("Синий");
         blue.addActionListener((actionEvent) -> {
-            controller.getModel().setColor(Color.BLUE);
+            controller.getModel().changeColor(Color.BLUE);
         });
 
         colors.add(green);
@@ -119,11 +119,11 @@ public class MyPanel extends JPanel implements Observer {
 
         JMenuItem withFill = new JMenuItem("С заливкой");
         withFill.addActionListener((actionEvent) -> {
-            controller.getModel().setFb(new Fill());
+            controller.getModel().changeFb(new Fill());
         });
         JMenuItem withoutFill = new JMenuItem("Без заливки");
         withoutFill.addActionListener((actionEvent) -> {
-            controller.getModel().setFb(new NoFill());
+            controller.getModel().changeFb(new NoFill());
         });
 
         fill.add(withFill);
@@ -209,15 +209,15 @@ public class MyPanel extends JPanel implements Observer {
             controller.setCurrentAction(new ActionMove(controller.getModel()));
         });
         JButton rectangularButton = createButton(rectangularIcon, "Прямоугольник", e -> {
-            controller.getModel().setShape(ShapeType.RECTANGLE);
+            controller.getModel().changeShape(ShapeType.RECTANGLE);
         });
         JButton ellipseButton = createButton(ellipseIcon, "Эллипс", e -> {
-            controller.getModel().setShape(ShapeType.ELLIPSE);
+            controller.getModel().changeShape(ShapeType.ELLIPSE);
         });
         JButton fillButton = createButton(fillIcon, "С заполнением", e -> {
-            controller.getModel().setFb(new Fill());
+            controller.getModel().changeFb(new Fill());
         });
-        JButton noFillButton = createButton(noFillIcon, "Без заполнения", e -> controller.getModel().setFb(new NoFill()));
+        JButton noFillButton = createButton(noFillIcon, "Без заполнения", e -> controller.getModel().changeFb(new NoFill()));
 
         toolBar.add(undoButton);
         toolBar.add(redoButton);

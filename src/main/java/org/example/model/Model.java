@@ -18,13 +18,13 @@ public class Model extends Observable {
     private MyShape currentShape;
 
     @AllArgsConstructor @Setter @Getter
-    private class StateShape{
+    public class StateShape{
         private Color color;
         private ShapeType shapeType;
         private FillBehavior fillBehavior;
     }
 
-    StateShape shape = new StateShape(Color.BLACK,ShapeType.RECTANGLE,new Fill());
+    public StateShape shape = new StateShape(Color.BLACK,ShapeType.RECTANGLE,new Fill());
 
 
     private List<MyShape> shapesList = new ArrayList<>();
@@ -52,8 +52,16 @@ public class Model extends Observable {
         notifyObservers();
     }
 
-    public void setShape(ShapeType shapeType) {
-        this.shape.setShapeType(shapeType);
+    public void changeShape(ShapeType shapeType) {
+        shape.setShapeType(shapeType);
+    }
+
+    public void changeColor(Color color){
+        shape.setColor(color);
+    }
+
+    public void changeFb(FillBehavior fb){
+        shape.setFillBehavior(fb);
     }
 
     public void removeShape(MyShape shape) {
