@@ -1,7 +1,6 @@
 package org.example.view;
 
 import lombok.Getter;
-import lombok.NonNull;
 import org.example.controller.Controller;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.ActionMove;
@@ -76,11 +75,11 @@ public class MyPanel extends JPanel implements Observer {
 
         JMenuItem ellipse = new JMenuItem("Эллипс");
         ellipse.addActionListener((ActionEvent e) -> {
-            controller.getModel().setShape(ShapeType.Ellipse);
+            controller.getModel().setShape(ShapeType.ELLIPSE);
         });
         JMenuItem rectangle = new JMenuItem("Прямоугольник");
         rectangle.addActionListener((ActionListener) -> {
-            controller.getModel().setShape(ShapeType.Rectangle);
+            controller.getModel().setShape(ShapeType.RECTANGLE);
         });
 
         shapes.add(ellipse);
@@ -210,10 +209,10 @@ public class MyPanel extends JPanel implements Observer {
             controller.setCurrentAction(new ActionMove(controller.getModel()));
         });
         JButton rectangularButton = createButton(rectangularIcon, "Прямоугольник", e -> {
-            controller.getModel().setShape(ShapeType.Rectangle);
+            controller.getModel().setShape(ShapeType.RECTANGLE);
         });
         JButton ellipseButton = createButton(ellipseIcon, "Эллипс", e -> {
-            controller.getModel().setShape(ShapeType.Ellipse);
+            controller.getModel().setShape(ShapeType.ELLIPSE);
         });
         JButton fillButton = createButton(fillIcon, "С заполнением", e -> {
             controller.getModel().setFb(new Fill());
@@ -244,7 +243,7 @@ public class MyPanel extends JPanel implements Observer {
         if (imgURL != null) {
             ImageIcon imageIcon = new ImageIcon(imgURL);
             Image img = imageIcon.getImage();
-            Image scaledImg = img.getScaledInstance(16, 16, Image.SCALE_DEFAULT);
+            Image scaledImg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
             return new ImageIcon(scaledImg);
         } else {
             System.err.println("Не удалось найти файл иконки по пути" + pathToIcon);

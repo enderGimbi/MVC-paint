@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.controller.action.ActionDraw;
 import org.example.controller.action.Action;
-import org.example.controller.action.ActionMove;
 import org.example.controller.state.UndoMachine;
 import org.example.model.Model;
 import org.example.model.fill.Fill;
@@ -13,7 +12,6 @@ import org.example.utils.SaveToFileUtil;
 import org.example.view.MyFrame;
 import org.example.view.MyPanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
@@ -32,9 +30,6 @@ public class Controller {
 
     private Controller() {
         model = new Model();
-        model.setShape(ShapeType.Rectangle);
-        model.setColor(Color.BLACK);
-        model.setFb(new Fill());
         model.setMyShape();
 
         currentAction = new ActionDraw(model);
@@ -66,11 +61,7 @@ public class Controller {
 
     public void mouseReleased() {
         history.add(currentAction);
-        if (currentAction instanceof ActionDraw) {
-            currentAction = new ActionDraw(model);
-        } else if (currentAction instanceof ActionMove) {
-            currentAction = new ActionMove(model);
-        }
+        currentAction = currentAction.clone();
         model.notifyObservers();
     }
 

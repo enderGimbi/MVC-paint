@@ -8,13 +8,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 public enum ShapeType {
-    Rectangle {
+    RECTANGLE {
         @Override
         public MyShape createShape(Color color, FillBehavior fillBehavior) {
             return new MyShape(new Rectangle2D.Double(), color, fillBehavior);
         }
     },
-    Ellipse {
+    ELLIPSE {
         @Override
         public MyShape createShape(Color color, FillBehavior fillBehavior) {
             return new MyShape(new Ellipse2D.Double(), color, fillBehavior);
