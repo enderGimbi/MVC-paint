@@ -74,13 +74,9 @@ public class MyPanel extends JPanel implements Observer {
         JMenu shapes = new JMenu("Фигуры");
 
         JMenuItem ellipse = new JMenuItem("Эллипс");
-        ellipse.addActionListener((ActionEvent e) -> {
-            controller.getModel().changeShape(ShapeType.ELLIPSE);
-        });
+        ellipse.addActionListener((ActionEvent e) -> controller.getModel().changeShape(ShapeType.ELLIPSE));
         JMenuItem rectangle = new JMenuItem("Прямоугольник");
-        rectangle.addActionListener((ActionListener) -> {
-            controller.getModel().changeShape(ShapeType.RECTANGLE);
-        });
+        rectangle.addActionListener((ActionListener) -> controller.getModel().changeShape(ShapeType.RECTANGLE));
 
         shapes.add(ellipse);
         shapes.add(rectangle);
@@ -95,17 +91,11 @@ public class MyPanel extends JPanel implements Observer {
         JMenu colors = new JMenu("Цвета");
 
         JMenuItem green = new JMenuItem("Зеленый");
-        green.addActionListener((ActionListener) -> {
-            controller.getModel().changeColor(Color.GREEN);
-        });
+        green.addActionListener((ActionListener) -> controller.getModel().changeColor(Color.GREEN));
         JMenuItem red = new JMenuItem("Красный");
-        red.addActionListener((actionEvent) -> {
-            controller.getModel().shape.setColor(Color.RED);
-        });
+        red.addActionListener((actionEvent) -> controller.getModel().changeColor(Color.RED));
         JMenuItem blue = new JMenuItem("Синий");
-        blue.addActionListener((actionEvent) -> {
-            controller.getModel().changeColor(Color.BLUE);
-        });
+        blue.addActionListener((actionEvent) -> controller.getModel().changeColor(Color.BLUE));
 
         colors.add(green);
         colors.add(red);
@@ -118,13 +108,9 @@ public class MyPanel extends JPanel implements Observer {
         JMenu fill = new JMenu("Заливка");
 
         JMenuItem withFill = new JMenuItem("С заливкой");
-        withFill.addActionListener((actionEvent) -> {
-            controller.getModel().changeFb(new Fill());
-        });
+        withFill.addActionListener((actionEvent) -> controller.getModel().changeFb(new Fill()));
         JMenuItem withoutFill = new JMenuItem("Без заливки");
-        withoutFill.addActionListener((actionEvent) -> {
-            controller.getModel().changeFb(new NoFill());
-        });
+        withoutFill.addActionListener((actionEvent) -> controller.getModel().changeFb(new NoFill()));
 
         fill.add(withFill);
         fill.add(withoutFill);
@@ -136,23 +122,15 @@ public class MyPanel extends JPanel implements Observer {
         var tools = new JMenu("Инструменты");
 
         undoMenuItem = new JMenuItem("Назад");
-        undoMenuItem.addActionListener((actionEvent) -> {
-            controller.getHistory().executeUndo();
-        });
+        undoMenuItem.addActionListener((actionEvent) -> controller.getHistory().executeUndo());
         undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
         redoMenuItem = new JMenuItem("Вперед");
-        redoMenuItem.addActionListener((actionEvent) -> {
-            controller.getHistory().executeRedo();
-        });
+        redoMenuItem.addActionListener((actionEvent) -> controller.getHistory().executeRedo());
         redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
         var draw = new JMenuItem("Рисовать");
-        draw.addActionListener((actionEvent) -> {
-            controller.setCurrentAction(new ActionDraw(controller.getModel()));
-        });
+        draw.addActionListener((actionEvent) -> controller.setCurrentAction(new ActionDraw(controller.getModel())));
         var move = new JMenuItem("Двигать");
-        move.addActionListener((actionEvent) -> {
-            controller.setCurrentAction(new ActionMove(controller.getModel()));
-        });
+        move.addActionListener((actionEvent) -> controller.setCurrentAction(new ActionMove(controller.getModel())));
 
         tools.add(undoMenuItem);
         tools.add(redoMenuItem);
@@ -165,9 +143,7 @@ public class MyPanel extends JPanel implements Observer {
     private JMenu getFile(Controller controller) {
         JMenu file = new JMenu("Файл");
         JMenuItem save = new JMenuItem("Сохранить");
-        save.addActionListener((actionEvent) -> {
-            controller.getFileUtil().save();
-        });
+        save.addActionListener((actionEvent) -> controller.getFileUtil().save());
         JMenuItem load = new JMenuItem("Загрузить");
         load.addActionListener((actionEvent) -> {
             controller.getFileUtil().load();
@@ -196,27 +172,13 @@ public class MyPanel extends JPanel implements Observer {
         ImageIcon noFillIcon = loadIcon("/icons/no_fill_16x16.png");
 
 
-        undoButton = createButton(undoIcon, "Отменить действие", e -> {
-            controller.getHistory().executeUndo();
-        });
-        redoButton = createButton(redoIcon, "Восстановить действие", e -> {
-            controller.getHistory().executeRedo();
-        });
-        JButton drawButton = createButton(drawIcon, "Рисовать", e -> {
-            controller.setCurrentAction(new ActionDraw(controller.getModel()));
-        });
-        JButton moveButton = createButton(moveIcon, "Двигать", e -> {
-            controller.setCurrentAction(new ActionMove(controller.getModel()));
-        });
-        JButton rectangularButton = createButton(rectangularIcon, "Прямоугольник", e -> {
-            controller.getModel().changeShape(ShapeType.RECTANGLE);
-        });
-        JButton ellipseButton = createButton(ellipseIcon, "Эллипс", e -> {
-            controller.getModel().changeShape(ShapeType.ELLIPSE);
-        });
-        JButton fillButton = createButton(fillIcon, "С заполнением", e -> {
-            controller.getModel().changeFb(new Fill());
-        });
+        undoButton = createButton(undoIcon, "Отменить действие", e -> controller.getHistory().executeUndo());
+        redoButton = createButton(redoIcon, "Восстановить действие", e -> controller.getHistory().executeRedo());
+        JButton drawButton = createButton(drawIcon, "Рисовать", e -> controller.setCurrentAction(new ActionDraw(controller.getModel())));
+        JButton moveButton = createButton(moveIcon, "Двигать", e -> controller.setCurrentAction(new ActionMove(controller.getModel())));
+        JButton rectangularButton = createButton(rectangularIcon, "Прямоугольник", e -> controller.getModel().changeShape(ShapeType.RECTANGLE));
+        JButton ellipseButton = createButton(ellipseIcon, "Эллипс", e -> controller.getModel().changeShape(ShapeType.ELLIPSE));
+        JButton fillButton = createButton(fillIcon, "С заполнением", e -> controller.getModel().changeFb(new Fill()));
         JButton noFillButton = createButton(noFillIcon, "Без заполнения", e -> controller.getModel().changeFb(new NoFill()));
 
         toolBar.add(undoButton);
@@ -243,7 +205,7 @@ public class MyPanel extends JPanel implements Observer {
         if (imgURL != null) {
             ImageIcon imageIcon = new ImageIcon(imgURL);
             Image img = imageIcon.getImage();
-            Image scaledImg = img.getScaledInstance(16,16, Image.SCALE_DEFAULT);
+            Image scaledImg = img.getScaledInstance(16, 16, Image.SCALE_DEFAULT);
             return new ImageIcon(scaledImg);
         } else {
             System.err.println("Не удалось найти файл иконки по пути" + pathToIcon);

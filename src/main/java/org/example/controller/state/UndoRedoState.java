@@ -42,9 +42,9 @@ public abstract class UndoRedoState {
 
         if (hasUndo && hasRedo) {
             return new StateEnableUndoEnableRedo(getUndoActivityList(), getRedoActivityList());
-        } else if (hasUndo && !hasRedo) {
+        } else if (hasUndo) {
             return new StateEnableUndoDisableRedo(getUndoActivityList(), getRedoActivityList());
-        } else if (!hasUndo && hasRedo) {
+        } else if (hasRedo) {
             return new StateDisableUndoEnableRedo(getUndoActivityList(), getRedoActivityList());
         } else {
             return new StateDisableUndoDisableRedo(getUndoActivityList(), getRedoActivityList());

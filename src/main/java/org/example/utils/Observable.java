@@ -18,6 +18,7 @@ public class Observable {
         }
     }
 
+    @SuppressWarnings("unused")
     public synchronized void unsubscribe(Observer observer) {
         if (observer == null) {
             throw new NullPointerException();

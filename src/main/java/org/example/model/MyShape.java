@@ -34,6 +34,7 @@ public class MyShape implements Cloneable, Serializable {
     @JsonIgnore
     private final FillBehavior fb;
 
+    @SuppressWarnings("unused")
     public MyShape() {
         color = Color.BLUE;
         shape = new Rectangle2D.Double();

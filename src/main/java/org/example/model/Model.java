@@ -17,14 +17,16 @@ import java.util.List;
 public class Model extends Observable {
     private MyShape currentShape;
 
-    @AllArgsConstructor @Setter @Getter
-    public class StateShape{
+    @AllArgsConstructor
+    @Setter
+    @Getter
+    private static class StateShape {
         private Color color;
         private ShapeType shapeType;
         private FillBehavior fillBehavior;
     }
 
-    public StateShape shape = new StateShape(Color.BLACK,ShapeType.RECTANGLE,new Fill());
+    private final StateShape shape = new StateShape(Color.BLACK, ShapeType.RECTANGLE, new Fill());
 
 
     private List<MyShape> shapesList = new ArrayList<>();
@@ -56,11 +58,11 @@ public class Model extends Observable {
         shape.setShapeType(shapeType);
     }
 
-    public void changeColor(Color color){
+    public void changeColor(Color color) {
         shape.setColor(color);
     }
 
-    public void changeFb(FillBehavior fb){
+    public void changeFb(FillBehavior fb) {
         shape.setFillBehavior(fb);
     }
 

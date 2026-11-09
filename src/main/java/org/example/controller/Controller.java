@@ -22,9 +22,9 @@ public class Controller {
     @Setter
     private Action currentAction;
     @Getter
-    private UndoMachine history;
+    private final UndoMachine history;
     @Getter
-    private SaveToFileUtil fileUtil;
+    private final SaveToFileUtil fileUtil;
 
     private Controller() {
         model = new Model();
