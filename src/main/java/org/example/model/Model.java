@@ -1,5 +1,6 @@
 package org.example.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.model.fill.Fill;
@@ -16,7 +17,12 @@ import java.util.List;
 public class Model extends Observable {
     private MyShape currentShape;
 
-    private record StateShape(Color color, ShapeType shapeType,FillBehavior fillBehavior){}
+    @AllArgsConstructor @Setter @Getter
+    private class StateShape{
+        private Color color;
+        private ShapeType shapeType;
+        private FillBehavior fillBehavior;
+    }
 
     StateShape shape = new StateShape(Color.BLACK,ShapeType.RECTANGLE,new Fill());
 
@@ -24,7 +30,7 @@ public class Model extends Observable {
     private List<MyShape> shapesList = new ArrayList<>();
 
     public void setMyShape() {
-        this.currentShape = MyShapeFactory.createShape(shape.shapeType, shape.color, shape.fillBehavior);
+        this.currentShape = MyShapeFactory.createShape(shape.getShapeType(), shape.getColor(), shape.getFillBehavior());
     }
 
     public void createCurrentShape(MyShape shape) {
@@ -47,7 +53,7 @@ public class Model extends Observable {
     }
 
     public void setShape(ShapeType shapeType) {
-        this.shape.shapeType = shapeType;
+        this.shape.setShapeType(shapeType);
     }
 
     public void removeShape(MyShape shape) {

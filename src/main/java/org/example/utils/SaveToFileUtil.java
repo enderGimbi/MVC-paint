@@ -14,7 +14,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class SaveToFileUtil {
-    private Model model;
+    private final Model model;
     private final Path file = Paths.get("data", "shapes.json");
 
 
