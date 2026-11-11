@@ -20,13 +20,13 @@ public class Model extends Observable {
     @AllArgsConstructor
     @Setter
     @Getter
-    private static class StateShape {
+    private static class ShapeState {
         private Color color;
         private ShapeType shapeType;
         private FillBehavior fillBehavior;
     }
 
-    private final StateShape shape = new StateShape(Color.BLACK, ShapeType.RECTANGLE, new Fill());
+    private final ShapeState shape = new ShapeState(Color.BLACK, ShapeType.RECTANGLE, new Fill());
 
 
     private List<MyShape> shapesList = new ArrayList<>();

@@ -34,6 +34,7 @@ public class MyShape implements Cloneable, Serializable {
     @JsonIgnore
     private final FillBehavior fb;
 
+    // используется Jackson для null
     @SuppressWarnings("unused")
     public MyShape() {
         color = Color.BLUE;
