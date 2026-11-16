@@ -62,6 +62,7 @@ public class MyShape implements Cloneable, Serializable {
     }
 
     @JsonCreator
+    @SuppressWarnings("unused")
     public MyShape(
             @JsonProperty("shapeType") String shapeType,
             @JsonProperty("colorRgb") int colorRGB,
