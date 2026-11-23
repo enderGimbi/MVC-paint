@@ -70,4 +70,16 @@ public class Model extends Observable {
         shapesList.remove(shape);
         notifyObservers();
     }
+
+    public ShapeType getShapeType(){
+        return shape.getShapeType();
+    }
+
+    public Color getColor(){
+        return shape.getColor();
+    }
+
+    public FillBehavior getFb(){
+        return shape.getFillBehavior();
+    }
 }

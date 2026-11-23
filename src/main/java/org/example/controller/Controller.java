@@ -73,4 +73,10 @@ public class Controller {
         }
     }
 
+    public void executeCommand(Action action){
+        action.execute();
+        history.add(action);
+        model.notifyObservers();
+    }
+
 }

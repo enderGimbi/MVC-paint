@@ -1,5 +1,7 @@
 package org.example.controller.action;
 
+import org.example.model.Model;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -8,9 +10,9 @@ public abstract class Action implements Cloneable {
     protected Point2D pressedPoint;
     protected Point2D releasedPoint;
 
-    public abstract void mousePressed(Point point);
+    public void mousePressed(Point point){};
 
-    public abstract void mouseDragged(Point point);
+    public void mouseDragged(Point point){};
 
     public abstract void execute();
 
