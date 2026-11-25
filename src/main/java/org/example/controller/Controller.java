@@ -34,11 +34,6 @@ public class Controller {
 
         history = new UndoMachine();
 
-        try {
-            fileUtil = new SaveToFileUtil(model);
-        } catch (IOException e) {
-            throw new RuntimeException("Ошибка при инициализации файла shapes.json");
-        }
 
         panel = new MyPanel(this);
 
@@ -46,6 +41,7 @@ public class Controller {
 
         frame = new MyFrame();
         frame.setPanel(panel);
+        fileUtil = new SaveToFileUtil(model,frame);
     }
 
     public void mousePressed(Point p) {

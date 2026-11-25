@@ -4,6 +4,7 @@ import org.example.model.Model;
 import org.example.model.MyShape;
 import tools.jackson.databind.json.JsonMapper;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.nio.*;
@@ -15,17 +16,35 @@ import java.util.List;
 
 public class SaveToFileUtil {
     private final Model model;
-    private final Path file = Paths.get("data", "shapes.json");
+    private final Component parent;
+    private Path file = Paths.get("data", "shapes.json");
 
 
-    public SaveToFileUtil(Model model) throws IOException {
+    public SaveToFileUtil(Model model, Component parent) {
         this.model = model;
-        if (file.getParent() != null) {
-            Files.createDirectories(file.getParent());
+        this.parent = parent;
+    }
+
+    private boolean chooseFile(boolean saveDialog){
+        JFileChooser chooser = new JFileChooser(file.toFile());
+        int result = saveDialog
+                ? chooser.showSaveDialog(parent)
+                : chooser.showOpenDialog(parent);
+        if(result!=JFileChooser.APPROVE_OPTION){
+            return false;
         }
+        Path selected = chooser.getSelectedFile().toPath();
+        if(saveDialog && !selected.toString().endsWith(".json")){
+            selected = Path.of(selected+".json");
+        };
+        this.file = selected;
+        return true;
     }
 
     public void save() {
+        if(!chooseFile(true)){
+            return;
+        }
         JsonMapper mapper = JsonMapper.builder().build();
         try (BufferedWriter writer = Files.newBufferedWriter(
                 file,
@@ -40,6 +59,9 @@ public class SaveToFileUtil {
     }
 
     public void load() {
+        if(!chooseFile(false)){
+            return;
+        }
         if (!Files.exists(file))
             return;
         JsonMapper mapper = JsonMapper.builder().build();
